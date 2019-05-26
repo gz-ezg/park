@@ -19,18 +19,8 @@
 				title: 'hello world'
 			}
 		},
-		onLoad() {
-			console.log('haha')
-		},
-		onShow() {
-			console.log("onshow")
-		},
-		onPullDownRefresh() {
-			console.log('isOk')
-		},
-		onNavigationBarButtonTap() {
-			console.log('button')
-		},
+		onLoad() {},
+		onShow() {},
 		methods: {
 			request() {
 				console.log(route)

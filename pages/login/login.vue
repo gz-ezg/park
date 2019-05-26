@@ -16,7 +16,9 @@
 		mapMutations
 	} from 'vuex';
 	export default {
-		data() {},
+		data() {
+			return {}
+		},
 		methods: {
 			handleLogin() {
 				this.$api.navigateTo({
