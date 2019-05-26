@@ -2,28 +2,46 @@
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
-			<text class="title">{{title}}</text>
+			<text @tap="request" class="title">{{title}}</text>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
-				title: 'Hello'
 			}
 		},
+		computed: {
+			...mapState(['title'])
+		},
 		onLoad() {
-
+			console.log('haha')
+		},
+		onShow() {
+			console.log("onshow")
+		},
+		onPullDownRefresh() {
+			console.log('isOk')
+		},
+		onNavigationBarButtonTap() {
+			console.log('button')
 		},
 		methods: {
-
+			request() {
+			},
+			navigateToLog() {
+			}
 		}
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.content {
 		text-align: center;
 		height: 400upx;
