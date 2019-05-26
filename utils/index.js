@@ -1,17 +1,17 @@
-export const getUrlQuery(url = '', data = {}) {
-		const hasQuery = data instanceof Object && Object.keys(data).length;
-		return {
-			url: hasQuery ? `${url}?${obj2urlquery(data)}` : url
-		};
-	},
+export const getUrlQuery = (url = '', data = {}) => {
+	const hasQuery = data instanceof Object && Object.keys(data).length;
+	return {
+		url: hasQuery ? `${url}?${obj2urlquery(data)}` : url
+	};
+};
 
-	export const obj2urlquery = (params = {}) => {
-		if (Object.keys(params).length) {
-			return Object.keys(params).map(v =>
-				`${encodeURIComponent(key)}=${encodeURIComponent((params)[key])}`).join('&');
-		}
-		return '';
+export const obj2urlquery = (params = {}) => {
+	if (Object.keys(params).length) {
+		return Object.keys(params).map(v =>
+			`${encodeURIComponent(key)}=${encodeURIComponent((params)[key])}`).join('&');
 	}
+	return '';
+};
 
 // 时间格式化
 export const formatDate = (timestamp = new Date().valueOf(), fmt = 'yyyy-MM-dd hh:mm:ss') => {
@@ -22,7 +22,7 @@ export const formatDate = (timestamp = new Date().valueOf(), fmt = 'yyyy-MM-dd h
 	if (date.toString() === 'Invalid Date') {
 		return 'Invalid Date';
 	}
-	const o: any = {
+	const o = {
 		'M+': date.getMonth() + 1, // 月份
 		'd+': date.getDate(), // 日
 		'h+': date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, // 小时
@@ -33,7 +33,7 @@ export const formatDate = (timestamp = new Date().valueOf(), fmt = 'yyyy-MM-dd h
 		'S': date.getMilliseconds() // 毫秒
 	};
 
-	const week: any = {
+	const week = {
 		'0': '/u65e5',
 		'1': '/u4e00',
 		'2': '/u4e8c',
@@ -94,7 +94,7 @@ export const deepClone = (obj) => {
  * @param result 格式化字符串 eg：`user: {name}`
  * @param args 格式化数据 eg： { name："123" }
  */
-export const strFormat = (result: string = '', args: any = {}): string => {
+export const strFormat = (result = '', args = {}) => {
 	for (const key in args) {
 		const reg = new RegExp('({' + key + '})', 'g');
 		result = result.replace(reg, args[key]);
@@ -135,10 +135,10 @@ export const validForm = async (form, valider) => {
 }
 
 // 防抖
-export const debounce = (func, wait) {
+export const debounce = (func, wait) => {
 	let timer;
 	// need function
-	return function(args: any) {
+	return function(args) {
 		if (timer) {
 			clearTimeout(timer);
 		}
@@ -151,7 +151,7 @@ export const debounce = (func, wait) {
 }
 
 // 数据脱敏
-export const dataMask = (str: string, type: string) => {
+export const dataMask = (str, type) => {
 	let result;
 	switch (type) {
 		case 'mobile':

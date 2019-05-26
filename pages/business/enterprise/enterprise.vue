@@ -1,8 +1,7 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
 		<view>
-			<text @tap="request" class="title">{{title}}</text>
+			enterprise
 		</view>
 	</view>
 </template>
@@ -35,7 +34,7 @@
 			request() {
 				console.log(route)
 				uni.navigateTo({
-					url: route.enterprise
+					url: route.LOG.url
 				})
 			},
 			navigateToLog() {}
