@@ -1,0 +1,15 @@
+@import 'core/index';
+@import 'mixin/core';
+@import 'theme/core';
+@import 'skin/index';
+
+button,
+.button-hover {
+	line-height: 1;
+	background-color: transparent;
+
+	&::before,
+	&::after {
+		border: 0;
+	}
+}

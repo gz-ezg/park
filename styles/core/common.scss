@@ -1,0 +1,387 @@
+@import '../theme/core';
+@import '../mixin/core';
+
+page,
+view,
+navigator,
+picker,
+image,
+button {
+	box-sizing: border-box;
+}
+
+page {
+	height: 100%;
+	background: $white;
+	overflow-y: auto;
+	overflow-x: hidden;
+	letter-spacing: 1rpx;
+	font-size: 36rpx;
+	position: relative;
+}
+
+.container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: $white;
+	position: relative;
+	word-break: break-all;
+}
+
+.statics-gild {
+	display: inline-block;
+	width: calc(100% / 3);
+	text-align: center;
+
+	> view:first-child {
+		font-size: 40rpx;
+		color: $gary-text;
+		margin-top: 30rpx;
+	}
+
+	> view:last-child {
+		font-size: 24rpx;
+		color: $light-text;
+		margin-top: 10rpx;
+	}
+}
+
+.normal-btn {
+	width: 154rpx;
+	height: 50rpx;
+	line-height: 24rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 24rpx;
+	color: #fff;
+	// background: linear-gradient(225deg, rgba(99, 107, 231, 1), rgba(131, 138, 245, 1));
+	border-radius: 26rpx;
+}
+
+.primary-button-hover {
+	background-color: darken($mainColor, 10) !important;
+}
+
+// left slide
+.left-slide {
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	&__item {
+		display: flex;
+		position: relative;
+
+		&__content {
+			display: flex;
+			position: relative;
+			z-index: 1;
+			width: 100%;
+			transition: left 0.2s ease-in-out;
+		}
+
+		&__operation {
+			@include flex-center();
+
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			width: 150rpx;
+			text-align: center;
+			background: #f00;
+			color: #fff;
+		}
+	}
+}
+
+// custom
+.bc__button {
+	width: 540rpx;
+	border-radius: 44rpx;
+}
+
+.bc__button--primary {
+	color: $white;
+	background-color: $primary;
+
+	&--disable {
+		background-color: $primary-disable;
+	}
+}
+
+.bc__button--primary--outline {
+	color: $primary;
+	background-color: #fff;
+	border: 1px solid $primary;
+}
+
+.full_page {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 301;
+}
+
+/* 表单必填 Start */
+.required::after {
+	content: '*';
+	color: #dd3242;
+}
+
+.top-horizontal-line {
+	margin: 0;
+	padding: 0;
+	height: 1rpx;
+	background: #ececec;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+/* 横向分割线样式 */
+.horizontal-line {
+	margin: 0;
+	padding: 0;
+	height: 1rpx;
+	background: #ececec;
+}
+
+/* 竖向分割线样式 */
+.vertical-line {
+	width: 1rpx;
+	height: 80rpx;
+	background: #e9e9e9;
+}
+
+/* title竖线样式 */
+.title-vertical-line {
+	width: 6rpx;
+	height: 30rpx;
+	// background: linear-gradient(90deg, rgba(99, 107, 231, 1), rgba(131, 138, 245, 1));
+	background: #e40023;
+}
+
+/* 用于全面屏的底部栏适配,子页面底部有按钮的需要进行判断使用 */
+.bottom-style-adapter {
+	padding-bottom: 68rpx !important;
+	min-height: 168rpx !important;
+}
+
+.pt-adapter {
+	padding-bottom: 68rpx !important;
+}
+
+.full-screen-adapter {
+	height: 68rpx;
+	width: 750rpx;
+	background: #fff;
+}
+
+/* 通用底部按钮样式 */
+.sub-btn {
+	text-align: center;
+	line-height: 80rpx;
+	width: 100%;
+	height: 100rpx;
+	background: #e40023;
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #fff;
+}
+
+/* 通用底部按钮样式 */
+.footer-view-btn {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.footer-view-btn-empty {
+	height: 100rpx;
+}
+
+/* 白背景 */
+.white-bg {
+	background: #fff;
+}
+
+/* 默认背景 */
+.normal-bg {
+	background: #f5f6fa;
+}
+
+/* 默认flex */
+.normal-flex {
+	display: flex;
+}
+
+/* 文字超长进行...隐藏 */
+.nowrap-font {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.nowrap-font-text {
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* 小圆点样式 */
+.dot-style {
+	margin: 0 10rpx;
+	width: 10rpx;
+	height: 10rpx;
+	border-radius: 50%;
+	background: #dfe3fd;
+}
+
+/* 通用模糊效果 */
+.blurry {
+	filter: blur(4px);
+}
+
+/* 通用模糊背景 */
+.blurry-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #000;
+	opacity: 0.6;
+	z-index: 9;
+	border-radius: 0;
+}
+
+.blurry-bg::after {
+	border: none;
+}
+
+.input-placeholder {
+	color: #cfd2e3;
+}
+
+.module-header {
+	color: $black-text;
+	font-weight: bold;
+	font-size: 32rpx;
+	position: relative;
+	margin-left: 26rpx;
+
+	&::before {
+		content: "";
+		height: 28rpx;
+		width: 6rpx;
+		position: absolute;
+		top: calc(50% - 28rpx / 2);
+		left: -20rpx;
+		bottom: 6rpx;
+		// background: linear-gradient(225deg, rgba(99, 107, 231, 1), rgba(131, 138, 245, 1));
+		background: rgba(248, 78, 74, 1);
+	}
+}
+
+/* 分享按钮样式 */
+.share-btn {
+	position: absolute;
+	background-color: transparent;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/* 我的名片，小店分享按钮 */
+.share-view-btn {
+	z-index: 3 !important;
+	opacity: 0 !important;
+	background: transparent !important;
+}
+
+.share-btn::after {
+	border: none;
+}
+
+.share-view {
+	position: fixed;
+	right: 0;
+	top: 85rpx;
+	width: 130rpx;
+	height: 56rpx;
+	border-radius: 28rpx 0rpx 0rpx 28rpx;
+	z-index: 2;
+	font-size: 24rpx;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.share-view-main {
+		position: absolute;
+		z-index: 9;
+
+		image {
+			width: 26rpx;
+			height: 27rpx;
+			margin-right: 10rpx;
+		}
+	}
+
+	.share-view-bg {
+		position: absolute;
+		border-radius: 28rpx 0rpx 0rpx 28rpx;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #e40023;
+		z-index: 3;
+	}
+}
+
+/* 我的名片，小店返回主页，购物车，商城个人中心按钮 */
+.home-icon {
+	position: fixed;
+	bottom: 200rpx;
+	right: 30rpx;
+
+	.home-icon-main {
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
+		align-items: center;
+
+		.home-icon-item {
+			position: relative;
+			width: 80rpx;
+			height: 80rpx;
+			margin-top: 40rpx;
+		}
+	}
+}
+
+.send-form-btn {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: transparent;
+	border-radius: 0;
+}
+
+.send-form-btn::after {
+	border: none;
+}

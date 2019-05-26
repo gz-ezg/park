@@ -1,0 +1,194 @@
+/* :root {
+  --baseColor: #409EFF;
+  --success: #67C23A;
+  --warning: #E6A23C;
+  --danger: #F56C6C;
+  --info: #909399;
+  --mainText: #303133;
+  --ragularText: #606266;
+  --secondaryText: #909399;
+  --placeholderText: #C0C4CC;
+  --firstBorder: #DCDFE6;
+  --secondaryBorder: #E4E7ED;
+  --threeLevelBorder: #EBEEF5;
+  --fourLevelBorder: #F2F6FC;
+} */
+
+.base-bg__basic {
+	background-color: #409eff;
+}
+
+.base-bg__basic_success {
+	background-color: #67c23a;
+}
+
+.base-bg__basic_warning {
+	background-color: #e6a23c;
+}
+
+.base-bg__basic_danger {
+	background-color: #dd3242;
+}
+
+.base-bg__basic_info {
+	background-color: #909399;
+}
+
+.base-bg__basic_white {
+	background: #fff;
+}
+
+/* 字体颜色 Start */
+.text-primary__color {
+	color: #000;
+}
+
+.text-regular__color {
+	color: #333;
+}
+
+.text-secondary__color {
+	color: #737373;
+}
+
+.text-placeholder__color {
+	color: #ababab !important;
+}
+
+.text-danger_color {
+	color: #dd3242;
+}
+
+/* 字体颜色 End */
+
+/* 字体大小 Start */
+.text-large {
+	font-size: 32rpx;
+}
+
+.text-base {
+	font-size: 28rpx;
+}
+
+.text-small {
+	font-size: 24rpx;
+}
+
+.text-tiny {
+	font-size: 22rpx;
+}
+
+.text-min {
+	font-size: 20rpx;
+}
+
+/* 字体大小 End */
+
+/* 表单必填 Start */
+.required::after {
+	content: "*";
+	color: #dd3242;
+}
+
+/* 表单必填 End */
+
+/* Flex Box Start */
+.flex-box {
+	display: flex;
+	display: -webkit-flex;
+}
+
+/* Flex Box End */
+
+/* Flex Column Start */
+.flex-column {
+	flex-flow: column;
+}
+
+/* Flex Column End */
+
+/* align item style Start */
+.align-items-center {
+	align-items: center;
+}
+
+.align-items-end {
+	align-items: flex-end;
+}
+
+/* align item style End */
+
+/* justify-content style Start */
+.space-between {
+	justify-content: space-between;
+}
+
+.vertical-center {
+	justify-content: center;
+}
+
+.flex-end {
+	justify-content: flex-end;
+}
+
+/* justify-content style End */
+
+/* Text Center */
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* 文字超长进行...隐藏 */
+.wrap-font {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+/* 自提联系人电话 */
+.buyer-mobile {
+	background: #f7f7f7;
+	padding: 10rpx 40rpx;
+	font-size: 24rpx;
+	font-weight: 500;
+	color: #000;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.buyer-mobile-triangle {
+	width: 0;
+	height: 0;
+	border-width: 40rpx;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #f7f7f7 rgba(0, 0, 0, 0);
+	position: absolute;
+	top: -60rpx;
+	left: 55rpx;
+}
+
+.buyer-mobile text {
+	font-size: 24rpx;
+	font-weight: 500;
+	color: #abb1b6;
+}
+
+.buyer-mobile input {
+	margin-left: 30rpx;
+}
+
+.buyer-mobile-placeholder {
+	font-size: 24rpx;
+	font-weight: 500;
+	color: #c3c8cd;
+}
+
+.font-style__basic {
+	font-size: 24rpx;
+}

@@ -1,0 +1,36 @@
+/* 红（#e53a40    #090707）
+绿色（#99d560    #363337）
+蓝色（#3464f8   #1c202b）
+第一个色是主色调，第二个是辅色调 */
+
+.main-highlight-text__red {
+	color: #e53a40 !important;
+}
+
+.color__red::after {
+	color: #e53a40 !important;
+}
+
+.sub-highlight-bg__red {
+	background: #090707 !important;
+}
+
+.main-highlight-bg__red {
+	background: #e53a40 !important;
+}
+
+.main-border__red {
+	border-color: #e53a40 !important;
+}
+
+.sub-border__red {
+	border-color: #090707 !important;
+}
+
+.border-color__red::after {
+	border-color: #e53a40 !important;
+}
+
+.border-hover-color__red:hover {
+	border-color: #e53a40 !important;
+}
