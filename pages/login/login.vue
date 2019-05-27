@@ -49,7 +49,18 @@ export default {
 			}
 			this[dataset.i] = value;
 		},
-		handleLogin() {}
+		handleLogin() {
+			uni.request({
+				url: '/api/channel/garden/login1',
+				data: {
+					loginCode: 'cscs',
+					password: '123456'
+				},
+				method: 'POST'
+			}).then(v => {
+				console.log(v);
+			});
+		}
 	}
 };
 </script>
