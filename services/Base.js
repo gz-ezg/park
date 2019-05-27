@@ -31,12 +31,20 @@ export class BaseService {
 		return new Promise((resolve, reject) => {
 			http(req)
 				.then(([err, res]) => {
+
+					if (err) {
+						if ('errMsg' in err && err.errMsg == "request:fail timeout") {
+							uni.showToast({
+								title: '请求超时',
+								icon: 'none'
+							})
+						}
+
+						return (err)
+					}
 					const {
 						statusCode
 					} = res;
-					if (err) {
-						reject(err)
-					}
 					if (statusCode >= 200 && statusCode <= 300) {
 						return resolve(res);
 					} else {

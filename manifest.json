@@ -10,7 +10,7 @@
 			"port": 3333,
 			"proxy": {
 				"/api": {
-					"target": "http://192.168.0.225:9000",
+					"target": "http://localhost:3000",
 					"pathRewrite": {"^/api" : ""},
 					"changeOrigin": true,
 					"secure": false
