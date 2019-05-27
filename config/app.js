@@ -1,10 +1,10 @@
 export default {
 	dev: {
-		host: 'localhost:3000',
-		staticHost: 'https://oss.pinquest.cn',
+		host: 'http://192.168.0.225:9000',
+		staticHost: '',
 	},
 	prod: {
-		host: 'localhost:3000',
-		staticHost: 'https://oss.pinquest.cn',
+		host: '',
+		staticHost: '',
 	}
 };

@@ -1,22 +1,38 @@
-export const testlogic = {
+export const channelLogic = {
 
     Login: {
-        url: '/testlogic/Login',
+        url: '/channel/garden/login',
+        type: 'post',
+    },
+
+    SendMsg: {
+        url: '/channel/garden/sendMsg',
         type: 'get',
     },
 
-    GetProfile: {
-        url: '/testlogic/GetProfile',
+    channelTypeImgList: {
+        url: '/channel/garden/channelTypeImgList',
         type: 'get',
     },
 
-    SetProfile: {
-        url: '/testlogic/SetProfile',
+    topFiveCompny: {
+        url: '/channel/garden/topFiveCompny',
         type: 'get',
     },
-
-    GetApp: {
-        url: '/testlogic/GetApp',
+    channelTypeCompanyList: {
+        url: '/channel/garden/channelTypeCompanyList',
         type: 'get',
     },
+    companyHonorByName: {
+        url: '/channel/garden/companyHonorByName',
+        type: 'get',
+    },
+    policyList: {
+        url: '/channel/garden/policyList',
+        type: 'get',
+    },
+    invoiceCheck: {
+        url: '/channel/garden/invoiceCheck',
+        type: 'get',
+    }
 };
