@@ -13,7 +13,7 @@
 
 <script>
 import route from '@/config/route.js';
-import { Api } from '@/services/garden.js';
+import { channelLogicApi } from '@/services/channelLogicApi.js';
 import { mapState, mapMutations } from 'vuex';
 export default {
 	data() {
@@ -52,18 +52,16 @@ export default {
 		},
 		async handleLogin() {
 			try {
-				await Api.Login({
-					loginCode: 'cscs',
-					password: '123456'
+				await channelLogicApi.Login({
+					loginCode: this.loginCode,
+					password: this.password
 				});
 				this.$api.navigateTo({ url: route.index });
 			} catch (e) {
-				//TODO handle the exception
+				console.log(e);
 			}
-
-			
 		}
-	}
+	}	
 };
 </script>
 

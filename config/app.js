@@ -8,3 +8,10 @@ export const _config = {
 		staticHost: '',
 	}
 };
+
+export const toastConfig = {
+	title: '',
+	icon: 'none',
+	duration: 1500,
+	mask: false
+}

@@ -31,7 +31,7 @@ export class BaseService {
 		return new Promise((resolve, reject) => {
 			http(req)
 				.then(([err, res]) => {
-
+					console.log(err, res)
 					if (err) {
 						if ('errMsg' in err && err.errMsg == "request:fail timeout") {
 							uni.showToast({
@@ -48,6 +48,11 @@ export class BaseService {
 					if (statusCode >= 200 && statusCode <= 300) {
 						return resolve(res);
 					} else {
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/error/error'
+							});
+						}, 0)
 						return reject(res);
 					}
 				})

@@ -36,120 +36,125 @@
 			<view id="demo3" class="content-item">C</view>
 			<view id="demo3" class="content-item">C</view>
 		</scroll-view>
-
 	</view>
 </template>
 
 <script>
-	import route from '@/config/route.js'
-	import {
-		mapState,
-		mapMutations
-	} from 'vuex';
-	export default {
-		data() {
-			return {}
+import route from '@/config/route.js';
+import { channelLogicApi } from '@/services/channelLogicApi.js';
+import { mapState, mapMutations } from 'vuex';
+export default {
+	data() {
+		return {};
+	},
+	async onLoad() {
+		try {
+			let rep = await channelLogicApi.ChannelTypeCompanyList({ page: 1, pageSize: 10 });
+		} catch (e) {
+			//TODO handle the exception
+		}
+	},
+
+	methods: {
+		navBack() {
+			uni.navigateTo({
+				url: '/pages/index/index'
+			});
 		},
-		methods: {
-			navBack() {
-				uni.navigateBack({
-					delta: 1,
-				})
-			},
-			handleLook(e) {
-				console.log(e)
-			}
+		handleLook(e) {
+			console.log(e);
 		}
 	}
+};
 </script>
 
 <style lang="scss">
-	@import "@/styles/mixin.scss";
+@import '@/styles/mixin.scss';
 
-	page {
-		font-size: 0;
-		overflow: hidden;
-	}
+page {
+	font-size: 0;
+	overflow: hidden;
+}
 
-	.page {
-		position: relative;
+.page {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+
+	.bg {
 		width: 100%;
 		height: 100vh;
+	}
 
-		.bg {
-			width: 100%;
-			height: 100vh;
-		}
+	.back {
+		position: absolute;
+		width: 125upx;
+		height: 50upx;
+		text-align: center;
+		background: rgba(255, 255, 255, 1);
+		box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
+		border-radius: 6upx;
+		font-size: 19upx;
+		font-weight: 500;
+		right: 33upx;
+		top: 236upx;
+		color: rgba(226, 22, 22, 1);
+		line-height: 50upx;
+	}
 
-		.back {
-			position: absolute;
-			width: 125upx;
-			height: 50upx;
-			text-align: center;
-			background: rgba(255, 255, 255, 1);
-			box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
-			border-radius: 6upx;
-			font-size: 19upx;
-			font-weight: 500;
-			right: 33upx;
-			top: 236upx;
-			color: rgba(226, 22, 22, 1);
-			line-height: 50upx;
-		}
+	.content {
+		@include absolute-center-top(346upx);
+		width: 683upx;
+		height: 628upx;
+		background: #ffffff;
+		box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
+		border-radius: 11upx;
+		overflow: hidden;
 
-		.content {
-			@include absolute-center-top(346upx);
-			width: 683upx;
-			height: 628upx;
-			background: #FFFFFF;
-			box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
-			border-radius: 11upx;
-			overflow: hidden;
+		&-item {
+			padding: 0 28upx;
+			position: relative;
+			padding-top: 1rpx;
+			height: 208upx;
+			border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
 
-			&-item {
-				padding: 0 28upx;
-				position: relative;
-				padding-top: 1rpx;
-				height: 208upx;
-				border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
+			.title {
+				margin: 20upx 0;
+				font-size: 25upx;
+				font-weight: 500;
+				color: rgba(44, 34, 34, 1);
+				line-height: 40upx;
+			}
 
-				.title {
-					margin: 20upx 0;
-					font-size: 25upx;
-					font-weight: 500;
-					color: rgba(44, 34, 34, 1);
-					line-height: 40upx;
+			.disc {
+				font-size: 19upx;
+				font-weight: 400;
+				color: rgba(125, 131, 134, 1);
+
+				&_item {
+					margin: 10upx 0;
 				}
+			}
 
-				.disc {
-					font-size: 19upx;
-					font-weight: 400;
-					color: rgba(125, 131, 134, 1);
+			.button {
+				position: absolute;
+				right: 28upx;
+				top: 90upx;
+				width: 133upx;
+				height: 50upx;
+				font-size: 19upx;
+				text-align: center;
+				line-height: 50upx;
+				font-weight: 400;
+				color: rgba(255, 255, 255, 1);
+				background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
+				box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
+			}
 
-					&_item {
-						margin: 10upx 0;
-					}
-				}
-
-				.button {
-					position: absolute;
-					right: 28upx;
-					top: 90upx;
-					width: 133upx;
-					height: 50upx;
-					font-size: 19upx;
-					text-align: center;
-					line-height: 50upx;
-					font-weight: 400;
-					color: rgba(255, 255, 255, 1);
-					background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
-					box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
-				}
-
-				.button_gray {
-					background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
-				}
+			.button_gray {
+				background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
 			}
 		}
 	}
+}
 </style>

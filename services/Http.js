@@ -15,13 +15,13 @@ export const delegate = {
 				// removeToken();
 				uni.showToast({
 					title: '登录已过期',
-					icon:'none'
+					icon: 'none'
 				});
 				setTimeout(() => {
 					uni.navigateTo({
 						url: '/pages/login/login'
 					});
-				},1000)
+				}, 1000)
 
 			}
 			return false;
@@ -33,7 +33,7 @@ class MiniProgramRequestProxy extends RequestRroxyCodeFactory {
 	constructRequestBody(req) {
 
 		req.req.header = Object.assign({}, req.header, {
-			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+			'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
 		});
 		return req.req;
 	}
@@ -103,13 +103,13 @@ export class HttpService extends BaseService {
 		});
 	}
 
-	get(params = {}, config) {
+	get(data = {}, config) {
 		const req = {
 			url: this.getUri(config.url),
 			method: 'GET',
-			params
+			data
 		};
-
+		
 		return this.requestProxy({
 			req,
 			config
@@ -127,19 +127,19 @@ export class HttpService extends BaseService {
 				req,
 				config
 			});
-			console.log(req)
+			
 		} catch (error) {
 			console.warn(error);
 			return;
 		}
-		console.log(req)
+		
 		try {
+			console.log(req	)
 			res = await this.request(req);
 		} catch (e) {
 			res = e;
 		}
 
-		console.log(req)
 		console.warn(res, req)
 
 		res = await miniProgramRequestProxy.constructResponse(res);

@@ -1,7 +1,7 @@
 <template>
 	<view class="index">
 		<image class="index__bg-top" src="../../static/index_top-bg.png"></image>
-		<image class="index__bg-bottom" src="../../static/index_bottom.png"> </image>
+		<image class="index__bg-bottom" src="../../static/index_bottom.png"></image>
 		<view @tap="navTo" class="index__header">
 			<view data-index="enterprise" class="index__header-item">
 				<image data-index="enterprise" src="../../static/index__icon1.png" class="icon"></image>
@@ -52,92 +52,124 @@
 </template>
 
 <script>
-	import route from '@/config/route.js';
-	import {
-		Api
-	} from '@/services/garden.js';
+import route from '@/config/route.js';
+import { channelLogicApi } from '@/services/channelLogicApi.js';
 
-	import {
-		mapState,
-		mapMutations
-	} from 'vuex';
-	export default {
-		data() {
-			return {
-				title: 'hello world'
-			};
+import { mapState, mapMutations } from 'vuex';
+export default {
+	data() {
+		return {
+		};
+	},
+	onLoad() {},
+	onShow() {},
+	methods: {
+		navTo({ target: { dataset } }) {
+			this.$api.navigateTo({
+				url: route[dataset.index]
+			});
 		},
-		onLoad() {},
-		onShow() {},
-		methods: {
-			navTo({
-				target: {
-					dataset
-				}
-			}) {
-				this.$api.navigateTo({
-					url: route[dataset.index]
-				})
-			},
-			async call() {
-				try {
-					await Api.Login({
-						password: '123'
-					})
-				} catch (e) {
-					console.log('hahaha')
-				}
+		async call() {
+			try {
+				await channelLogicApi.SendMsg();
+				this.$api.toast('呼叫成功')
+			} catch (e) {
+				this.$api.toast('呼叫失败')
 			}
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss">
-	@import '@/styles/mixin.scss';
+@import '@/styles/mixin.scss';
 
-	page {
-		background: #eef0f7;
-		font-size: 0;
-		height: 100%;
-		overflow: hidden;
-	}
+page {
+	background: #eef0f7;
+	font-size: 0;
+	height: 100%;
+	overflow: hidden;
+}
 
-	.index {
-		width: 100%;
-		height: 100%;
+.index {
+	width: 100%;
+	height: 100%;
 
-		&__bg {
-			&-top {
-				width: 100vw;
-				height: 435upx;
-			}
-
-			&-bottom {
-				position: fixed;
-				bottom: 0;
-				left: 0;
-				width: 100vw;
-				height: 280upx;
-			}
+	&__bg {
+		&-top {
+			width: 100vw;
+			height: 435upx;
 		}
 
-		&__header {
+		&-bottom {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100vw;
+			height: 280upx;
+		}
+	}
+
+	&__header {
+		@include flex-evenly();
+		position: relative;
+		top: -80upx;
+
+		&-item {
+			width: 211upx;
+			height: 256upx;
+			background: rgba(255, 255, 255, 1);
+			box-shadow: 0upx 10upx 21upx 0upx rgba(69, 0, 0, 0.15);
+			border-radius: 11upx;
+
+			.icon {
+				margin: 44upx auto 22upx auto;
+				display: block;
+				height: 100upx;
+				width: 100upx;
+			}
+
+			.title {
+				text-align: center;
+				font-size: 24upx;
+				font-weight: 400;
+				color: rgba(44, 34, 34, 1);
+			}
+		}
+	}
+
+	&__body {
+		overflow: none;
+		position: relative;
+		margin: -40upx auto 0;
+		width: 683upx;
+		height: 433upx;
+		background: rgba(255, 255, 255, 1);
+		box-shadow: 0upx 10upx 21upx 0upx rgba(69, 0, 0, 0.1);
+		border-radius: 11upx;
+
+		&-title {
+			text-align: center;
+			height: 100upx;
+			font-size: 28upx;
+			font-weight: 500;
+			color: rgba(44, 34, 34, 1);
+			line-height: 100upx;
+		}
+
+		&-content {
 			@include flex-evenly();
-			position: relative;
-			top: -80upx;
 
 			&-item {
 				width: 211upx;
-				height: 256upx;
-				background: rgba(255, 255, 255, 1);
-				box-shadow: 0upx 10upx 21upx 0upx rgba(69, 0, 0, 0.15);
-				border-radius: 11upx;
+				height: 137upx;
 
 				.icon {
-					margin: 44upx auto 22upx auto;
 					display: block;
-					height: 100upx;
-					width: 100upx;
+					margin: 0 auto;
+					margin-bottom: 19upx;
+					width: 67upx;
+					height: 67upx;
 				}
 
 				.title {
@@ -149,65 +181,22 @@
 			}
 		}
 
-		&__body {
-			overflow: none;
-			position: relative;
-			margin: -40upx auto 0;
-			width: 683upx;
-			height: 433upx;
-			background: rgba(255, 255, 255, 1);
-			box-shadow: 0upx 10upx 21upx 0upx rgba(69, 0, 0, 0.1);
-			border-radius: 11upx;
-
-			&-title {
-				text-align: center;
-				height: 100upx;
-				font-size: 28upx;
-				font-weight: 500;
-				color: rgba(44, 34, 34, 1);
-				line-height: 100upx;
-			}
-
-			&-content {
-				@include flex-evenly();
-
-				&-item {
-					width: 211upx;
-					height: 137upx;
-
-					.icon {
-						display: block;
-						margin: 0 auto;
-						margin-bottom: 19upx;
-						width: 67upx;
-						height: 67upx;
-					}
-
-					.title {
-						text-align: center;
-						font-size: 24upx;
-						font-weight: 400;
-						color: rgba(44, 34, 34, 1);
-					}
-				}
-			}
-
-			&-button {
-				position: absolute;
-				bottom: -31upx;
-				margin: 0 auto;
-				left: 0;
-				right: 0;
-				width: 389upx;
-				height: 72upx;
-				font-size: 28upx;
-				color: rgba(255, 255, 255, 1);
-				background: rgba(226, 22, 22, 1);
-				border-radius: 42upx;
-				text-align: center;
-				line-height: 72upx;
-				z-index: 1;
-			}
+		&-button {
+			position: absolute;
+			bottom: -31upx;
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+			width: 389upx;
+			height: 72upx;
+			font-size: 28upx;
+			color: rgba(255, 255, 255, 1);
+			background: rgba(226, 22, 22, 1);
+			border-radius: 42upx;
+			text-align: center;
+			line-height: 72upx;
+			z-index: 1;
 		}
 	}
+}
 </style>

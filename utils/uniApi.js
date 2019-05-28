@@ -1,6 +1,9 @@
 import {
 	getUrlQuery
 } from '@/utils/index.js';
+import {
+	toastConfig
+} from '@/config/app.js'
 
 const linkTo = ({
 	url,
@@ -75,11 +78,22 @@ export const reLaunch = ({
 	});
 };
 
+export const toast = (config) => {
+	if (typeof config == 'string') {
+		return uni.showToast(Object.assign({}, toastConfig, {
+			title: config
+		}))
+	} else {
+		return uni.showToast(
+			Object.assign({}, toastConfig, config))
+	}
+}
 
 const api = {
 	navigateTo,
 	reLaunch,
 	switchTab,
-	redirectTo
+	redirectTo,
+	toast
 }
 export default api;

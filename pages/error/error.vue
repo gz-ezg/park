@@ -23,7 +23,7 @@
 		methods: {
 			navBack() {
 				uni.navigateBack({
-					delta: 1
+					delta: 2
 				});
 			},
 			navToIndex() {
