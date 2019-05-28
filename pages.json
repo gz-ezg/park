@@ -1,6 +1,9 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/business/highSalary/highSalary"
+		},
+		{
 			"path": "pages/login/login"
 		},
 		{
@@ -14,6 +17,9 @@
 		},
 		{
 			"path": "pages/business/highSalary/highSalary"
+		},
+		{
+			"path": "pages/business/highSalary/companyDetail/companyDetail"
 		},
 		{
 			"path": "pages/tools/abnormal/abnormal"
@@ -41,7 +47,7 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"navigationStyle":"custom",
+		"navigationStyle": "custom",
 		"backgroundColor": "#F8F8F8"
 	},
 	"condition": { //模式配置，仅开发期间生效

@@ -8,7 +8,7 @@ export const getUrlQuery = (url = '', data = {}) => {
 export const obj2urlquery = (params = {}) => {
 	if (Object.keys(params).length) {
 		return Object.keys(params).map(v =>
-			`${encodeURIComponent(key)}=${encodeURIComponent((params)[key])}`).join('&');
+			`${encodeURIComponent(v)}=${encodeURIComponent((params)[v])}`).join('&');
 	}
 	return '';
 };

@@ -39,8 +39,9 @@ const linkTo = ({
 };
 
 const navigateTo = ({
-	url
-}, data = {}) => {
+	url,
+	data = {}
+}) => {
 	linkTo({
 		url,
 		data,
