@@ -32,8 +32,8 @@ export const delegate = {
 class MiniProgramRequestProxy extends RequestRroxyCodeFactory {
 	constructRequestBody(req) {
 
-		req.req.headers = Object.assign({}, req.headers, {
-			'x-pin-corpid': '0',
+		req.req.header = Object.assign({}, req.header, {
+			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 		});
 		return req.req;
 	}
@@ -132,7 +132,7 @@ export class HttpService extends BaseService {
 			console.warn(error);
 			return;
 		}
-
+		console.log(req)
 		try {
 			res = await this.request(req);
 		} catch (e) {

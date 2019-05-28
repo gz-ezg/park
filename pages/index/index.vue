@@ -87,7 +87,6 @@
 				} catch (e) {
 					console.log('hahaha')
 				}
-
 			}
 		}
 	};

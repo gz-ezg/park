@@ -1,7 +1,7 @@
 export const channelLogic = {
 
     Login: {
-        url: '/channel/garden/login',
+        url: 'channel/garden/login',
         type: 'post',
     },
 
