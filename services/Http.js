@@ -121,7 +121,7 @@ export class HttpService extends BaseService {
 		config
 	}) {
 		let res;
-		uni.showLoading({})
+		// uni.showLoading({})
 		try {
 			req = await miniProgramRequestProxy.preprocessRequest({
 				req,

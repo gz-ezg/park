@@ -69,10 +69,10 @@ export default {
 				return this.$api.toast('请输入密码');
 			}
 			try {
-				await channelLogicApi.Login({
-					loginCode: this.loginCode,
-					password: this.password
-				});
+				// await channelLogicApi.Login({
+				// 	loginCode: this.loginCode,
+				// 	password: this.password
+				// });
 				this.$api.navigateTo({ url: route.index });
 			} catch (e) {
 				console.log(e);

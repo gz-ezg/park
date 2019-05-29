@@ -15,6 +15,7 @@ export default {
 <style lang="scss">
 /*每个页面公共css */
 @import '@/styles/index.scss';
+
 .white_placeholder {
 	font-size: 28upx;
 	color: rgba(255, 255, 255, 0.4) !important;

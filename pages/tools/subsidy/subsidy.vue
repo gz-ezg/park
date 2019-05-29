@@ -19,114 +19,162 @@
 			<view @tap="handleSubmit" class="button">立即提交</view>
 			<image src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
 		</view>
+
+		<x-popup  :show="show" @hidePopup="hidePopup">
+			<view class="popus">
+				<image src="../../../static/pop.png" class="popus__img"></image>
+			</view>
+		</x-popup>
 	</view>
 </template>
 
 <script>
-import { channelLogicApi } from '@/services/channelLogicApi.js';
-import route from '@/config/route.js';
+	import {
+		channelLogicApi
+	} from '@/services/channelLogicApi.js';
+	import xPopup from '@/components/x-popup/x-popup.vue'
+	import route from '@/config/route.js';
 
-export default {
-	data() {
-		return {
-			from: {}
-		};
-	},
-	methods: {
-		handleInput({ detail: { value }, target: { dataset } }) {
-			this.from[dataset.name] = value;
+	export default {
+		data() {
+			return {
+				from: {},
+				show: true
+			};
 		},
-		navBack() {
-			uni.navigateTo({
-				url: route.index
-			});
+		components: {
+			xPopup
 		},
-		async handleSubmit() {
-			// !this.from.companyname && (return this.$api.toast('公司名称不能为空'))
-			// !this.from.name && (return this.$api.toast('负责人不能为空'))
-			// !this.from.tel && (return this.$api.toast('电话不能为空'))
-			let { companyname, tel, name } = this;
-			await channelLogicApi.GovernmentSubsidies({ companyname, tel, name, userid: '10510' });
+
+		methods: {
+			handleInput({
+				detail: {
+					value
+				},
+				target: {
+					dataset
+				}
+			}) {
+				this.from[dataset.name] = value;
+			},
+			navBack() {
+				uni.navigateTo({
+					url: route.index
+				});
+			},
+			async handleSubmit() {
+				// !this.from.companyname && (return this.$api.toast('公司名称不能为空'))
+				// !this.from.name && (return this.$api.toast('负责人不能为空'))
+				// !this.from.tel && (return this.$api.toast('电话不能为空'))
+				let {
+					companyname,
+					tel,
+					name
+				} = this;
+				await channelLogicApi.GovernmentSubsidies({
+					companyname,
+					tel,
+					name,
+					userid: '10510'
+				});
+			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss">
-@import '@/styles/mixin.scss';
-.page {
-	width: 100%;
-	height: 100vh;
+	@import '@/styles/mixin.scss';
 
-	.bg {
+	.page {
 		width: 100%;
-		height: 100%;
-	}
+		height: 100vh;
 
-	.back {
-		position: absolute;
-		width: 125upx;
-		height: 50upx;
-		text-align: center;
-		background: rgba(255, 255, 255, 1);
-		box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
-		border-radius: 6upx;
-		font-size: 19upx;
-		font-weight: 500;
-		right: 33upx;
-		top: 236upx;
-		color: rgba(226, 22, 22, 1);
-		line-height: 50upx;
-	}
+		.bg {
+			width: 100%;
+			height: 100%;
+		}
 
-	&__title {
-		position: absolute;
-		left: 33upx;
-		top: 334upx;
-		font-size: 33upx;
-		font-weight: 500;
-		color: rgba(255, 255, 255, 1);
-	}
-	&__body {
-		@include absolute-center-top(406upx) width: 683upx;
-		height: 383upx;
-		padding: 11upx 0 0 0;
-		background: rgba(255, 255, 255, 1);
-		border-radius: 11upx;
-
-		.item {
-			display: flex;
-			align-items: center;
-			font-size: 22upx;
-			font-weight: 500;
-			height: 78rpx;
-			padding: 0 28upx;
-			box-shadow: 0px 1px 0px 0px rgba(93, 72, 67, 0.16);
-			.title {
-				width: 180upx;
-			}
-			.item__iput {
-				flex: 1;
+		.popus {
+			width: 550upx;
+			height: 733upx;
+			
+			&__img {
+				transform: scale(1.1);
+				// box-shadow: 0px 11upx 17upx 0upx rgba(0, 0, 0, 0.24);
+				height: 100%;
+				width: 100%;
 			}
 		}
-		.button {
-			width: 389upx;
-			height: 72upx;
-			background: rgba(226, 22, 22, 1);
-			border-radius: 42upx;
-			text-align: center;
-			line-height: 72upx;
-			color: #ffffff;
-			font-size: 28upx;
-			margin: 40upx auto 0;
-		}
-		.icon__bottom {
+
+		.back {
 			position: absolute;
-			bottom: 0;
-			right: 0;
-			width: 97upx;
-			height: 78upx;
+			width: 125upx;
+			height: 50upx;
+			text-align: center;
+			background: rgba(255, 255, 255, 1);
+			box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
+			border-radius: 6upx;
+			font-size: 19upx;
+			font-weight: 500;
+			right: 33upx;
+			top: 236upx;
+			color: rgba(226, 22, 22, 1);
+			line-height: 50upx;
+		}
+
+		&__title {
+			position: absolute;
+			left: 33upx;
+			top: 334upx;
+			font-size: 33upx;
+			font-weight: 500;
+			color: rgba(255, 255, 255, 1);
+		}
+
+		&__body {
+			@include absolute-center-top(406upx) width: 683upx;
+			height: 383upx;
+			padding: 11upx 0 0 0;
+			background: rgba(255, 255, 255, 1);
+			border-radius: 11upx;
+
+			.item {
+				display: flex;
+				align-items: center;
+				font-size: 22upx;
+				font-weight: 500;
+				height: 78rpx;
+				padding: 0 28upx;
+				box-shadow: 0px 1px 0px 0px rgba(93, 72, 67, 0.16);
+
+				.title {
+					width: 180upx;
+				}
+
+				.item__iput {
+					flex: 1;
+				}
+			}
+
+			.button {
+				width: 389upx;
+				height: 72upx;
+				background: rgba(226, 22, 22, 1);
+				border-radius: 42upx;
+				text-align: center;
+				line-height: 72upx;
+				color: #ffffff;
+				font-size: 28upx;
+				margin: 40upx auto 0;
+			}
+
+			.icon__bottom {
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				width: 97upx;
+				height: 78upx;
+			}
 		}
 	}
-}
 </style>
