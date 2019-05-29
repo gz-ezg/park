@@ -59,84 +59,83 @@ export default {
 				}
 			});
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss">
-@import '@/styles/mixin.scss';
+	@import '@/styles/mixin.scss';
 
-page {
-	font-size: 0;
-	overflow: hidden;
-	background: red;
-}
+	page {
+		font-size: 0;
+		overflow: hidden;
+		background: red;
+	}
 
-.page {
-	position: relative;
-	width: 100%;
-	height: 100vh;
-
-	.bg {
+	.page {
+		position: relative;
 		width: 100%;
 		height: 100vh;
-	}
 
-	.back {
-		position: absolute;
-		width: 125upx;
-		height: 50upx;
-		text-align: center;
-		background: rgba(255, 255, 255, 1);
-		box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
-		border-radius: 6upx;
-		font-size: 19upx;
-		font-weight: 500;
-		right: 33upx;
-		top: 236upx;
-		color: rgba(226, 22, 22, 1);
-		line-height: 50upx;
-	}
+		.bg {
+			width: 100%;
+			height: 100vh;
+		}
 
-	.content {
-		@include absolute-center-top(346upx);
-		width: 683upx;
-		height: 700upx;
-		background: #ffffff;
-		box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
-		border-radius: 11upx;
-		overflow: hidden;
+		.back {
+			position: absolute;
+			width: 125upx;
+			height: 50upx;
+			text-align: center;
+			background: rgba(255, 255, 255, 1);
+			box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
+			border-radius: 6upx;
+			font-size: 19upx;
+			font-weight: 500;
+			right: 33upx;
+			top: 236upx;
+			color: rgba(226, 22, 22, 1);
+			line-height: 50upx;
+		}
 
-		&-item {
-			padding: 0 28upx 0 78upx;
-			position: relative;
-			padding-top: 1rpx;
-			height: 175upx;
-			border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
+		.content {
+			@include absolute-center-top(346upx);
+			width: 683upx;
+			height: 700upx;
+			background: #ffffff;
+			box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
+			border-radius: 11upx;
+			overflow: hidden;
 
-			.number {
-				position: absolute;
-				top: 39upx;
-				left: 0;
-				width: 67upx;
-				height: 67upx;
-				font-weight: 900;
-				font-size: 67upx;
-				line-height: 67rpx;
-				text-align: center;
-				color: #ff140a;
+			&-item {
+				padding: 0 28upx 0 78upx;
+				position: relative;
+				padding-top: 1rpx;
+				height: 175upx;
+				border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
 
-				.fix {
-					border-top: 2upx solid #ff140a;
-					background: #ffffff;
-					height: 30upx;
-					width: 40upx;
-					transform: rotate(-40deg);
-					position: relative;
-					left: 30upx;
-					top: -20upx;
+				.number {
+					position: absolute;
+					top: 39upx;
+					left: 0;
+					width: 67upx;
+					height: 67upx;
+					font-weight: 900;
+					font-size: 67upx;
+					line-height: 67rpx;
+					text-align: center;
+					color: #ff140a;
+
+					.fix {
+						border-top: 2upx solid #ff140a;
+						background: #ffffff;
+						height: 30upx;
+						width: 40upx;
+						transform: rotate(-40deg);
+						position: relative;
+						left: 30upx;
+						top: -20upx;
+					}
 				}
-			}
 
 			.title {
 				margin: 16upx 0;
@@ -147,35 +146,35 @@ page {
 				overflow: hidden;
 			}
 
-			.disc {
-				font-size: 19upx;
-				font-weight: 400;
-				color: rgba(125, 131, 134, 1);
+				.disc {
+					font-size: 19upx;
+					font-weight: 400;
+					color: rgba(125, 131, 134, 1);
 
-				&_item {
-					margin: 0 0 10upx 0;
+					&_item {
+						margin: 0 0 10upx 0;
+					}
 				}
-			}
 
-			.button {
-				position: absolute;
-				right: 28upx;
-				top: 79upx;
-				width: 133upx;
-				height: 50upx;
-				font-size: 19upx;
-				text-align: center;
-				line-height: 50upx;
-				font-weight: 400;
-				color: rgba(255, 255, 255, 1);
-				background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
-				box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
-			}
+				.button {
+					position: absolute;
+					right: 28upx;
+					top: 79upx;
+					width: 133upx;
+					height: 50upx;
+					font-size: 19upx;
+					text-align: center;
+					line-height: 50upx;
+					font-weight: 400;
+					color: rgba(255, 255, 255, 1);
+					background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
+					box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
+				}
 
-			.button_gray {
-				background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
+				.button_gray {
+					background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
+				}
 			}
 		}
 	}
-}
 </style>

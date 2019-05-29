@@ -254,5 +254,8 @@ export default {
 			}
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+>>>>>>> ba5f982d158b0d0fc4e51ae7606ca6b504b3137d
 </style>
