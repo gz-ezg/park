@@ -2,10 +2,20 @@
 	<view class="login">
 		<image class="login_welcome" src="/static/welcome.png"></image>
 		<view :class="{ select: select1 }" class="login_input-m">
-			<input data-i="loginCode" @focus="handleFocus" @blur="handleBlur" class="input" type="text" value="" placeholder-class="input_placeholder" placeholder="请输入登录码" />
+			<input data-i="loginCode" @focus="handleFocus" @blur="handleBlur" class="input" type="text" value="" placeholder-class="white_placeholder" placeholder="请输入登录码" />
 		</view>
 		<view :class="{ select: select2 }" class="login_input-p">
-			<input data-i="password" @focus="handleFocus" @blur="handleBlur" class="input" type="text" value="" placeholder-class="input_placeholder" placeholder="请输入密码" />
+			<input
+				adjust-position="false"
+				data-i="password"
+				@focus="handleFocus"
+				@blur="handleBlur"
+				class="input"
+				type="text"
+				value=""
+				placeholder-class="white_placeholder"
+				placeholder="请输入密码"
+			/>
 		</view>
 		<view @tap="handleLogin" class="login_button"><image class="login_button-icon" src="../../static/icon_arrow.png"></image></view>
 	</view>
@@ -21,7 +31,8 @@ export default {
 			select1: false,
 			select2: false,
 			password: '',
-			loginCode: ''
+			loginCode: '',
+			height: '100%'
 		};
 	},
 	methods: {
@@ -51,6 +62,12 @@ export default {
 			this[dataset.i] = value;
 		},
 		async handleLogin() {
+			if (!this.loginCode) {
+				return this.$api.toast('请输入登陆码');
+			}
+			if (!this.password) {
+				return this.$api.toast('请输入密码');
+			}
 			try {
 				await channelLogicApi.Login({
 					loginCode: this.loginCode,
@@ -61,21 +78,28 @@ export default {
 				console.log(e);
 			}
 		}
-	}	
+	}
 };
 </script>
 
 <style lang="scss">
 @import '@/styles/mixin.scss';
+input::-webkit-input-placeholder {
+	color: #fff;
+	font-size: 12px;
+	text-align: right;
+}
 
-.input-placeholder {
-	color: rgba(255, 255, 255, 0.4);
+page {
+	background: linear-gradient(180deg, rgba(255, 84, 38, 1) 0%, rgba(210, 9, 1, 1) 100%);
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
 }
 
 .login {
-	height: 100vh;
-	width: 100vw;
-	background: linear-gradient(180deg, rgba(255, 84, 38, 1) 0%, rgba(210, 9, 1, 1) 100%);
+	height: 100%;
+	width: 100%;
 
 	&_welcome {
 		margin: 0 auto;
@@ -122,11 +146,6 @@ export default {
 			color: #2c2222;
 		}
 
-		.input_placeholder {
-			font-size: 28upx;
-			color: rgba(255, 255, 255, 0.4) !important;
-		}
-
 		.select {
 			background: rgba(255, 255, 255, 1);
 		}
@@ -154,10 +173,5 @@ export default {
 			transform: scale(1.2);
 		}
 	}
-}
-
-.input_placeholder {
-	font-size: 28upx;
-	color: rgba(255, 255, 255, 0.4) !important;
 }
 </style>

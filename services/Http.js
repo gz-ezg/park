@@ -109,7 +109,7 @@ export class HttpService extends BaseService {
 			method: 'GET',
 			data
 		};
-		
+
 		return this.requestProxy({
 			req,
 			config
@@ -121,23 +121,25 @@ export class HttpService extends BaseService {
 		config
 	}) {
 		let res;
-
+		uni.showLoading({})
 		try {
 			req = await miniProgramRequestProxy.preprocessRequest({
 				req,
 				config
 			});
-			
+
 		} catch (error) {
 			console.warn(error);
 			return;
 		}
-		
+
 		try {
-			console.log(req	)
+			console.log(req)
 			res = await this.request(req);
+			uni.hideToast();
 		} catch (e) {
 			res = e;
+			uni.hideToast();
 		}
 
 		console.warn(res, req)

@@ -6,6 +6,7 @@ const config = {
 	enterprise: "/pages/business/enterprise/enterprise",
 	finance: "/pages/business/finance/finance",
 	highSalary: "/pages/business/highSalary/highSalary",
+	companyDetail: "/pages/business/highSalary/companyDetail/companyDetail",
 
 	//常用工具
 	abnormal: "/pages/tools/abnormal/abnormal",

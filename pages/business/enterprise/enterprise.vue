@@ -4,37 +4,15 @@
 		<view class="back" @tap="navBack">返回</view>
 
 		<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
-			<view id="demo1" class="content-item">
-				<view class="title">广州奇异果科技有限公司</view>
+			<view v-for="(item, index) in list" class="content-item" :key="item.id">
+				<view class="title">{{ item.company_name }}</view>
 				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
-					<view class="disc_item">办公地点：</view>
+					<view class="disc_item">注册时间：{{ item.register_time }}</view>
+					<view class="disc_item">产品特色：{{ item.product_feature }}</view>
+					<view class="disc_item">办公地点：{{ item.address }}</view>
 				</view>
-				<view @tap="handleLook" :class="{ button_gray: true }" class="button">查看官网</view>
+				<view @tap="handleLook(item.website)" :class="{ button_gray: !item.website }" class="button">查看官网</view>
 			</view>
-			<view id="demo1" class="content-item">
-				<view class="title">广州奇异果科技有限公司</view>
-				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
-					<view class="disc_item">办公地点：</view>
-				</view>
-				<view @tap="handleLook" class="button">查看官网</view>
-			</view>
-			<view id="demo1" class="content-item">
-				<view class="title">广州奇异果科技有限公司</view>
-				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
-					<view class="disc_item">办公地点：</view>
-				</view>
-				<view @tap="handleLook" class="button">查看官网</view>
-			</view>
-			<view id="demo3" class="content-item">C</view>
-			<view id="demo3" class="content-item">C</view>
-			<view id="demo3" class="content-item">C</view>
-			<view id="demo3" class="content-item">C</view>
 		</scroll-view>
 	</view>
 </template>
@@ -43,13 +21,23 @@
 import route from '@/config/route.js';
 import { channelLogicApi } from '@/services/channelLogicApi.js';
 import { mapState, mapMutations } from 'vuex';
+import { formatDate } from '@/utils/index.js';
 export default {
 	data() {
-		return {};
+		return {
+			list: [],
+			website: false
+		};
 	},
 	async onLoad() {
 		try {
 			let rep = await channelLogicApi.ChannelTypeCompanyList({ page: 1, pageSize: 10 });
+			if (rep.rows.length) {
+				this.list = rep.rows.map(v => {
+					v.register_time = formatDate(v.register_time, 'yyyy年MM月dd日');
+					return v;
+				});
+			}
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -62,7 +50,10 @@ export default {
 			});
 		},
 		handleLook(e) {
-			console.log(e);
+			if (!e) {
+				return;
+			}
+			window.open(`http://${e}`)
 		}
 	}
 };
@@ -124,6 +115,7 @@ page {
 				font-weight: 500;
 				color: rgba(44, 34, 34, 1);
 				line-height: 40upx;
+				overflow: hidden;
 			}
 
 			.disc {

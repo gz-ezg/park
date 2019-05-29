@@ -47,6 +47,11 @@
 				</view>
 			</view>
 			<view @tap="call" class="index__body-button">一键呼叫园内财税管家</view>
+			<view class="index__text">
+				<view class="line"></view>
+				<view class="year">2019</view>
+				<view class="copyright">Copyright @2004 - 2019 xxxx.com 版权所有</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -58,8 +63,7 @@ import { channelLogicApi } from '@/services/channelLogicApi.js';
 import { mapState, mapMutations } from 'vuex';
 export default {
 	data() {
-		return {
-		};
+		return {};
 	},
 	onLoad() {},
 	onShow() {},
@@ -72,9 +76,9 @@ export default {
 		async call() {
 			try {
 				await channelLogicApi.SendMsg();
-				this.$api.toast('呼叫成功')
+				this.$api.toast('呼叫成功');
 			} catch (e) {
-				this.$api.toast('呼叫失败')
+				this.$api.toast('呼叫失败');
 			}
 		}
 	}
@@ -196,6 +200,30 @@ page {
 			text-align: center;
 			line-height: 72upx;
 			z-index: 1;
+		}
+	}
+	&__text {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		color: #e21616;
+		margin: 0 0 40upx 40upx;
+		.line {
+			width: 50upx;
+			height: 8upx;
+			background: #e21616;
+			margin-bottom: 10upx;
+		}
+		.year {
+			font-size: 37upx;
+			font-weight: 700;
+		}
+		.copyright {
+			width: 240upx;
+			font-size: 14upx;
+			font-weight: 500;
+			color: rgba(226, 22, 22, 1);
+			line-height: 30upx;
 		}
 	}
 }

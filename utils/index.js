@@ -8,15 +8,18 @@ export const getUrlQuery = (url = '', data = {}) => {
 export const obj2urlquery = (params = {}) => {
 	if (Object.keys(params).length) {
 		return Object.keys(params).map(v =>
-			`${encodeURIComponent(key)}=${encodeURIComponent((params)[key])}`).join('&');
+			`${encodeURIComponent(v)}=${encodeURIComponent((params)[v])}`).join('&');
 	}
 	return '';
 };
 
 // 时间格式化
 export const formatDate = (timestamp = new Date().valueOf(), fmt = 'yyyy-MM-dd hh:mm:ss') => {
-	if (typeof timestamp === 'string') {
-		timestamp = parseInt(timestamp, 10);
+	// if (typeof timestamp === 'string') {
+	// 	timestamp = parseInt(timestamp, 10);
+	// }
+	if(!timestamp) {
+		return ''
 	}
 	const date = new Date(timestamp);
 	if (date.toString() === 'Invalid Date') {

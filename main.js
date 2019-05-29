@@ -9,7 +9,8 @@ import {
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 Vue.prototype.$api = api
-Vue.prototype.$http = {...channelLogicApi}
+Vue.prototype.$http = { ...channelLogicApi
+}
 
 App.mpType = 'app'
 

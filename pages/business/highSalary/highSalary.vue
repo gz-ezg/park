@@ -4,55 +4,18 @@
 		<view class="back" @tap="navBack">返回</view>
 
 		<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
-			<view id="demo1" class="content-item">
+			<view v-for="(item, index) in list" id="demo1" class="content-item">
 				<view class="number">
-					1
+					{{ index + 1 }}
 					<view class="fix"></view>
 				</view>
-				<view class="title">广州奇异果科技有限公司</view>
+				<view class="title">{{ item.company_name }}</view>
 				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
+					<view class="disc_item">注册时间：{{ item.register_time }}</view>
+					<view class="disc_item">产品特色：{{ item.product_feature }}</view>
 				</view>
-				<view @tap="handleLook" :class="{ button_gray: true }" class="button">查看荣誉</view>
+				<view @tap="handleLook(item.company_name)" class="button">查看荣誉</view>
 			</view>
-			<view id="demo1" class="content-item">
-				<view class="number">
-					2
-					<view class="fix"></view>
-				</view>
-				<view class="title">广州奇异果科技有限公司</view>
-				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
-				</view>
-				<view @tap="handleLook" class="button">查看荣誉</view>
-			</view>
-			<view id="demo1" class="content-item">
-				<view class="number">
-					3
-					<view class="fix"></view>
-				</view>
-
-				<view class="title">广州奇异果科技有限公司</view>
-				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
-				</view>
-				<view @tap="handleLook" class="button">查看荣誉</view>
-			</view>
-			<view id="demo1" class="content-item">
-				<view class="title">广州奇异果科技有限公司</view>
-				<view class="disc">
-					<view class="disc_item">注册时间：2014年4月2日</view>
-					<view class="disc_item">产品特色：</view>
-				</view>
-				<view @tap="handleLook" class="button">查看荣誉</view>
-			</view>
-			<view id="demo3" class="content-item">C</view>
-			<view id="demo3" class="content-item">C</view>
-			<view id="demo3" class="content-item">C</view>
-			<view id="demo3" class="content-item">C</view>
 		</scroll-view>
 	</view>
 </template>
@@ -62,13 +25,21 @@ import { channelLogicApi } from '@/services/channelLogicApi.js';
 
 import route from '@/config/route.js';
 import { mapState, mapMutations } from 'vuex';
+import { formatDate } from '@/utils/index.js';
 export default {
 	data() {
-		return {};
+		return {
+			list: []
+		};
 	},
 	async onLoad() {
 		try {
-			await channelLogicApi.TopFiveCompny();
+			console.log();
+			const resp = await channelLogicApi.TopFiveCompny();
+			this.list = resp.map(v => {
+				v.register_time = formatDate(v.register_time, 'yyyy年MM月dd日');
+				return v;
+			});
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -79,16 +50,14 @@ export default {
 				url: '/pages/index/index'
 			});
 		},
-		async call() {
-			try {
-				await channelLogicApi.SendMsg();
-				this.$api.toast('呼叫成功');
-			} catch (e) {
-				this.$api.toast('呼叫失败');
-			}
-		},
-		handleLook(e) {
-			console.log(e);
+
+		async handleLook(e) {
+			this.$api.navigateTo({
+				url: route.companyDetail,
+				data: {
+					componyName:e
+				}
+			});
 		}
 	}
 };
@@ -175,6 +144,7 @@ page {
 				font-weight: 700;
 				color: rgba(44, 34, 34, 1);
 				line-height: 40upx;
+				overflow: hidden;
 			}
 
 			.disc {

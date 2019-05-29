@@ -42,6 +42,10 @@ export const apiRoute = {
 		FindAreaListByParentId: {
 			url: '/product/area/findAreaListByParentId',
 			type: 'get',
+		},
+		GovernmentSubsidies: {
+			url: '/channel/garden/governmentSubsidies',
+			type: 'get',
 		}
 	}
 }

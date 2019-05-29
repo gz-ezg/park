@@ -7,8 +7,8 @@
 			<image class="icon" src="../../../static/finance_icon.png" />
 		</view>
 		<swiper class="card-swiper" :class="dotStyle ? 'square-dot' : 'round-dot'" :circular="true" :autoplay="true" interval="5000" duration="500" @change="cardSwiper">
-			<swiper-item v-for="(item, index) in swiperList" :key="index" :class="cardCur == index ? 'cur' : ''">
-				<view class="swiper-item"><image :src="item.url"></image></view>
+			<swiper-item v-for="(item, index) in imgList" :key="index" :class="cardCur == index ? 'cur' : ''">
+				<view class="swiper-item"><image :src="item.path"></image></view>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -22,51 +22,15 @@ export default {
 	data() {
 		return {
 			cardCur: 0,
-			swiperList: [
-				{
-					id: 0,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-				},
-				{
-					id: 1,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg'
-				},
-				{
-					id: 2,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-				},
-				{
-					id: 3,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-				},
-				{
-					id: 4,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-				},
-				{
-					id: 5,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-				},
-				{
-					id: 6,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-				}
-			],
-			dotStyle: false,
-			towerStart: 0,
-			direction: ''
+			direction: '',
+			imgList: [],
+			dotStyle: false
 		};
 	},
 	async onLoad() {
 		try {
-			await channelLogicApi.ChannelTypeImgList();
+			let res = await channelLogicApi.ChannelTypeImgList({ type: 'cs' });
+			this.imgList = res;
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -77,21 +41,15 @@ export default {
 				url: '/pages/index/index'
 			});
 		},
-		handleLook(e) {
-			console.log(e);
-		},
-		DotStyle(e) {
-			this.dotStyle = e.detail.value;
-		},
 		cardSwiper(e) {
 			this.cardCur = e.detail.current;
 		},
 		async call() {
 			try {
 				await channelLogicApi.SendMsg();
-				this.$api.toast('呼叫成功')
+				this.$api.toast('呼叫成功');
 			} catch (e) {
-				this.$api.toast('呼叫失败')
+				this.$api.toast('呼叫失败');
 			}
 		}
 	}

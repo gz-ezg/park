@@ -16,6 +16,9 @@
 			"path": "pages/business/highSalary/highSalary"
 		},
 		{
+			"path": "pages/business/highSalary/companyDetail/companyDetail"
+		},
+		{
 			"path": "pages/tools/abnormal/abnormal"
 		},
 		{
@@ -41,7 +44,7 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"navigationStyle":"custom",
+		"navigationStyle": "custom",
 		"backgroundColor": "#F8F8F8"
 	},
 	"condition": { //模式配置，仅开发期间生效
