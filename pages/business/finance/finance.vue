@@ -1,16 +1,19 @@
 <template>
 	<view class="page">
-		<image class="bg" src="../../../static/finance_bg.png"></image>
-		<view class="back" @tap="navBack">返回</view>
-		<view @tap="call" class="call">
-			一键呼叫园内财税管家
-			<image class="icon" src="../../../static/finance_icon.png" />
+		<view :class="{ blur: loading }">
+			<image class="bg" src="../../../static/finance_bg.png"></image>
+			<view class="back" @tap="navBack">返回</view>
+			<view @tap="call" class="call">
+				一键呼叫园内财税管家
+				<image class="icon" src="../../../static/finance_icon.png" />
+			</view>
+			<swiper class="card-swiper" :class="dotStyle ? 'square-dot' : 'round-dot'" :circular="true" :autoplay="true" interval="5000" duration="500" @change="cardSwiper">
+				<swiper-item v-for="(item, index) in imgList" :key="index" :class="cardCur == index ? 'cur' : ''">
+					<view class="swiper-item"><image :src="item.path"></image></view>
+				</swiper-item>
+			</swiper>
 		</view>
-		<swiper class="card-swiper" :class="dotStyle ? 'square-dot' : 'round-dot'" :circular="true" :autoplay="true" interval="5000" duration="500" @change="cardSwiper">
-			<swiper-item v-for="(item, index) in imgList" :key="index" :class="cardCur == index ? 'cur' : ''">
-				<view class="swiper-item"><image :src="item.path"></image></view>
-			</swiper-item>
-		</swiper>
+		<x-Loading :show="loading"></x-Loading>
 	</view>
 </template>
 
@@ -24,7 +27,8 @@ export default {
 			cardCur: 0,
 			direction: '',
 			imgList: [],
-			dotStyle: false
+			dotStyle: false,
+			loading: false
 		};
 	},
 	async onLoad() {
@@ -45,11 +49,14 @@ export default {
 			this.cardCur = e.detail.current;
 		},
 		async call() {
+			this.loading = true;
 			try {
 				await channelLogicApi.SendMsg();
 				this.$api.toast('呼叫成功');
 			} catch (e) {
 				this.$api.toast('呼叫失败');
+			} finally {
+				this.loading = false;
 			}
 		}
 	}

@@ -1,19 +1,22 @@
 <template>
 	<view class="page">
-		<image class="bg" src="../../../static/enterprise__bg.png"></image>
-		<view class="back" @tap="navBack">返回</view>
+		<view :class="{ blur: loading }">
+			<image class="bg" src="../../../static/enterprise__bg.png"></image>
+			<view class="back" @tap="navBack">返回</view>
 
-		<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
-			<view v-for="(item, index) in list" class="content-item" :key="item.id">
-				<view class="title">{{ item.company_name }}</view>
-				<view class="disc">
-					<view class="disc_item">注册时间：{{ item.register_time }}</view>
-					<view class="disc_item">产品特色：{{ item.product_feature }}</view>
-					<view class="disc_item">办公地点：{{ item.address }}</view>
+			<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
+				<view v-for="(item, index) in list" class="content-item" :key="item.id">
+					<view class="title">{{ item.company_name }}</view>
+					<view class="disc">
+						<view class="disc_item">注册时间：{{ item.register_time }}</view>
+						<view class="disc_item">产品特色：{{ item.product_feature }}</view>
+						<view class="disc_item">办公地点：{{ item.address }}</view>
+					</view>
+					<view @tap="handleLook(item.website)" :class="{ button_gray: !item.website }" class="button">查看官网</view>
 				</view>
-				<view @tap="handleLook(item.website)" :class="{ button_gray: !item.website }" class="button">查看官网</view>
-			</view>
-		</scroll-view>
+			</scroll-view>
+		</view>
+		<x-Loading :show="loading"></x-Loading>
 	</view>
 </template>
 
@@ -26,7 +29,8 @@ export default {
 	data() {
 		return {
 			list: [],
-			website: false
+			website: false,
+			loading: true
 		};
 	},
 	async onLoad() {
@@ -40,6 +44,8 @@ export default {
 			}
 		} catch (e) {
 			//TODO handle the exception
+		} finally {
+			this.loading = false;
 		}
 	},
 
@@ -53,7 +59,7 @@ export default {
 			if (!e) {
 				return;
 			}
-			window.open(`http://${e}`)
+			window.open(`http://${e}`);
 		}
 	}
 };

@@ -1,0 +1,1 @@
+<view bind:__l="__l"><view hidden="{{!(show)}}" class="x-mask"></view><view hidden="{{!(show)}}" class="container"><view class="loader"><view class="roataqx-loader"><view class="one"></view><view class="two"></view><view class="three"></view></view></view></view></view>

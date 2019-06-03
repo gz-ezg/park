@@ -1,147 +1,335 @@
 <template>
 	<view class="page">
-		<image class="bg" src="../../../static/latestPolicy_bg.png" mode=""></image>
-		<view class="back" @tap="navBack">返回</view>
-		<view class="search">
-			<view class="search__left">
-				<image src="../../../static/search__left.png" mode=""></image>
+		<view :class="{ blur: loading }">
+			<image @click.stop="selectOk" class="bg" src="../../../static/latestPolicy_bg.png" mode=""></image>
+			<view class="back" @tap="navBack">返回</view>
+			<view class="search">
+				<view @tap="handleSelectAddress" class="search__left">
+					{{ myArea }}
+					<view class="trangle"></view>
+				</view>
+				<view class="search__input"><input @focus="onFocus" @blur="onBlur" placeholder-style="font-size:14px;color:rgba(44,34,34,0.24);" placeholder="搜索关键字" /></view>
+				<view @tap="handleSearch" class="search__right"><image src="../../../static/search__input.png" mode=""></image></view>
 			</view>
-			<view class="search__input">
-				<input placeholder="清收s" />
-			</view>
-			<view class="search__right">
-				<image src="../../../static/search__input.png" mode=""></image>
+			<picker-view class="picker" v-if="isSelect" indicator-class="selectClass" :indicator-style="indicatorStyle" :value="value" @change="bindChange">
+				<picker-view-column>
+					<view class="item" v-for="(item, index) in provinceList" :key="index">{{ item }}</view>
+				</picker-view-column>
+				<picker-view-column>
+					<view @click="handleQuit" class="item" v-for="(item, index) in city" :key="index">{{ item }}</view>
+				</picker-view-column>
+			</picker-view>
+			<scroll-view v-if="list.length" class="content" scroll-y="true" @scrolltolower="scrolltolower" scroll-with-animation="true">
+				<view v-for="(item, index) in list" :key="item.id" @tap="showDetail(index)" class="content-item">
+					<view class="title">{{ item.Title }}</view>
+					<view class="disc">{{ item.Province}}<text style="margin: 0 20upx;">{{item.Label}}</text>{{item.Date}}</view>
+				</view>
+			</scroll-view>
 
-			</view>
+			<x-popup bgColor="#fff" :show="show" :title="detail.Title" @hidePopup="hidePopup">
+				<view class="popus"><rich-text :nodes="detail.HContent"></rich-text></view>
+			</x-popup>
 		</view>
-		<picker-view class="picker" v-if="visible" :indicator-style="indicatorStyle" :value="value" @change="bindChange">
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in years" :key="index">{{item}}年</view>
-			</picker-view-column>
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in months" :key="index">{{item}}月</view>
-			</picker-view-column>
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in days" :key="index">{{item}}日</view>
-			</picker-view-column>
-		</picker-view>
+		<x-Loading :show="loading"></x-Loading>
 	</view>
 </template>
 
 <script>
-	import {
-		channelLogicApi
-	} from '@/services/channelLogicApi.js';
-	export default {
-		data() {
-			return {
-				years: ['23'],
-				months: ['23'],
-				days: ['23'],
-				visible: true,
-				value: [9999, 9999, 9999],
-				indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth/(750/100))}px;`
-			};
+import { channelLogicApi } from '@/services/channelLogicApi.js';
+let province = [];
+
+export default {
+	data() {
+		return {
+			provinceList: [],
+			city: [],
+			title: '',
+			isSelect: false,
+			show: false,
+			list: [],
+			detail: {},
+			value: [18, 0, 0],
+			indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth / (750 / 100))}px;`,
+			loading: true,
+			myArea: '',
+			page: 0,
+			pageSize: 10,
+			hasMore: true
+		};
+	},
+	async onLoad() {
+		try {
+			const account = uni.getStorageSync('account');
+			this.myArea = JSON.parse(account).cityName;
+			province = await channelLogicApi.GetProvinceList();
+			this.provinceList = province.map(v => v.province.realname);
+			this.city = province[18].city.map(v => v.realname);
+			// console.log(this.provinceList);
+		} catch (e) {
+			//TODO handle the exception
+		} finally {
+			this.loading = false;
+		}
+	},
+	methods: {
+		// onPicLoaded() {
+		// 	this.loading = false
+		// },
+		onFocus() {
+			this.isSelect = false;
 		},
-		async onLoad() {
+		onBlur({ detail: { value } }) {
+			this.title = value;
+		},
+		scrolltolower(e) {
+			this.getList();
+		},
+		async getList() {
+			this.loading = true;
+			if (!this.hasMore) {
+				return false;
+			}
+			if (!this.page) {
+				this.list = [];
+			}
+			this.page = Number(this.page) + 1;
 			try {
-				await channelLogicApi.GetProvinceList();
+				const resp = await channelLogicApi.PolicyList({ city: this.myArea, title: this.title, page: this.page, pageSize: this.pageSize });
+				this.hasMore = resp.total > this.page * this.pageSize ? true : false;
+
+				this.list = [...this.list, ...resp.result];
 			} catch (e) {
 				//TODO handle the exception
+			} finally {
+				this.loading = false;
 			}
 		},
-		methods: {
-			navBack() {
-				uni.navigateTo({
-					url: '/pages/index/index'
-				});
+		handleSelectAddress() {
+			let { isSelect } = this;
+			if (isSelect) {
+				this.isSelect = false;
+			} else {
+				this.isSelect = true;
 			}
+		},
+		async handleSearch() {
+			this.isSelect = false;
+			this.page = [];
+			if (!this.title) {
+				return this.$api.toast('请输入关键字');
+			}
+
+			if (this.loading) {
+				return;
+			}
+			this.getList();
+		},
+		bindChange({ detail: { value } }) {
+			console.log(value);
+			this.value = value;
+			this.city = province[value[0]].city.map(v => v.realname);
+			this.myArea = this.city[value[1]];
+		},
+		navBack() {
+			uni.navigateTo({
+				url: '/pages/index/index'
+			});
+		},
+		selectOk() {
+			this.isSelect = false;
+			this.list = [];
+		},
+		showDetail(index) {
+			this.show = true;
+			this.detail = this.list[index];
+		},
+		hidePopup() {
+			this.show = false;
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss">
-	@import '@/styles/mixin.scss';
+@import '@/styles/mixin.scss';
 
-	.page {
+.page {
+	width: 100%;
+	height: 100vh;
+	min-height: 1334upx;
+	overflow: hidden;
+
+	> view {
 		width: 100%;
-		height: 100vh;
+		height: 100%;
+	}
 
-		.bg {
-			width: 100%;
-			height: 100%;
-		}
+	.bg {
+		width: 100%;
+		height: 100%;
+	}
 
-		.back {
-			position: absolute;
-			width: 125upx;
-			height: 50upx;
+	.back {
+		position: absolute;
+		width: 125upx;
+		height: 50upx;
+		text-align: center;
+		background: rgba(255, 255, 255, 1);
+		box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
+		border-radius: 6upx;
+		font-size: 19upx;
+		font-weight: 500;
+		right: 33upx;
+		top: 236upx;
+		color: rgba(226, 22, 22, 1);
+		line-height: 50upx;
+	}
+	.picker {
+		@include absolute-center-top(452upx);
+		width: 683upx;
+		height: 500upx;
+		font-size: 24upx;
+		color: #000;
+		background: #ffffff;
+		border-radius: 10upx;
+		overflow: hidden;
+
+		.item {
+			line-height: 100upx;
 			text-align: center;
-			background: rgba(255, 255, 255, 1);
-			box-shadow: 0upx 1upx 0upx 0upx rgba(226, 22, 22, 1);
-			border-radius: 6upx;
-			font-size: 19upx;
-			font-weight: 500;
-			right: 33upx;
-			top: 236upx;
-			color: rgba(226, 22, 22, 1);
-			line-height: 50upx;
+			// width: 100upx;
 		}
-		.picker {
-			@include absolute-center-top(460upx);
-			width: 683upx;
-			height: 500upx;
-		}
-		.search {
-			@include absolute-center-top(368upx);
+	}
+	.search {
+		@include absolute-center-top(368upx);
+		display: flex;
+		border-radius: 6upx;
+		width: 683upx;
+		height: 78upx;
+		background: white;
+
+		&__left {
+			position: relative;
 			display: flex;
-			border-radius: 6upx;
-			width: 683upx;
+			align-items: center;
+			// justify-content: center;
+			padding-left: 14upx;
+			width: 132upx;
 			height: 78upx;
-			background: white;
+			font-size: 22upx;
+			box-shadow: -1upx 0px 0px 0px rgba(93, 72, 67, 0.16);
+			// background: rgba(93, 72, 67, 0.08);
 
-			&__left {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 78upx;
-				height: 78upx;
-				background: rgba(93, 72, 67, 0.08);
-
-				image {
-					height: 30upx;
-					width: 30upx;
-				}
+			.trangle {
+				position: absolute;
+				right: 12upx;
+				top: 38upx;
+				width: 0;
+				height: 0;
+				border-width: 6upx;
+				border-style: solid;
+				border-color: #000 transparent transparent transparent;
 			}
-
-			&__input {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 30upx;
-				flex: 1;
-				height: 100%;
-				line-height: 78upx;
-
-				input {
-					width: 90%;
-				}
+			image {
+				height: 30upx;
+				width: 30upx;
 			}
+		}
 
-			&__right {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 104upx;
-				height: 78upx;
-				background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
-				border-radius: 0px 6upx 6upx 0px;
+		&__input {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 28upx;
+			flex: 1;
+			height: 100%;
+			line-height: 78upx;
 
-				image {
-					height: 40upx;
-					width: 40upx;
-				}
+			input {
+				width: 90%;
+			}
+		}
+
+		&__right {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 104upx;
+			height: 78upx;
+			background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
+			border-radius: 0px 6upx 6upx 0px;
+
+			image {
+				height: 40upx;
+				width: 40upx;
 			}
 		}
 	}
+	.content {
+		@include absolute-center-top(460upx);
+		width: 683upx;
+		height: 600upx;
+		background: #ffffff;
+		box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
+		border-radius: 11upx;
+		overflow: hidden;
+
+		&-item {
+			padding: 0 28upx;
+			position: relative;
+			padding-top: 1rpx;
+			height: 150upx;
+			border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
+
+			.title {
+				margin: 16upx 0;
+				font-size: 25upx;
+				font-weight: 500;
+				color: rgba(44, 34, 34, 1);
+				line-height: 40upx;
+				padding-right: 10upx;
+				overflow: hidden;
+				// width: 683upx;
+				@include ellipse-text(1);
+			}
+
+			.disc {
+				font-size: 19upx;
+				font-weight: 400;
+				color: rgba(125, 131, 134, 1);
+				overflow: hidden;
+
+				&_item {
+					margin: 10upx 0;
+				}
+			}
+
+			.button {
+				position: absolute;
+				right: 28upx;
+				top: 90upx;
+				width: 133upx;
+				height: 50upx;
+				font-size: 19upx;
+				text-align: center;
+				line-height: 50upx;
+				font-weight: 400;
+				color: rgba(255, 255, 255, 1);
+				background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
+				box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
+			}
+
+			.button_gray {
+				background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
+			}
+		}
+	}
+	.popus {
+		padding: 0 33upx 33upx;
+		font-size: 19upx;
+		color: #7d8386;
+		// height: 100upx;
+		// width: 683upx;
+	}
+}
 </style>

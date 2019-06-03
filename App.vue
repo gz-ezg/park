@@ -15,6 +15,7 @@ export default {
 <style lang="scss">
 /*每个页面公共css */
 @import '@/styles/index.scss';
+@import '@/styles/icon.scss';
 
 .white_placeholder {
 	font-size: 28upx;

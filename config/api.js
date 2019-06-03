@@ -31,7 +31,7 @@ export const apiRoute = {
 			url: '/channel/garden/policyList',
 			type: 'get',
 		},
-		invoiceCheck: {
+		InvoiceCheck: {
 			url: '/channel/garden/invoiceCheck',
 			type: 'get',
 		},
@@ -45,6 +45,10 @@ export const apiRoute = {
 		},
 		GovernmentSubsidies: {
 			url: '/channel/garden/governmentSubsidies',
+			type: 'get',
+		},
+		QueryChannelCompnyByName: {
+			url: '/channel/garden/queryChannelCompnyByName',
 			type: 'get',
 		}
 	}

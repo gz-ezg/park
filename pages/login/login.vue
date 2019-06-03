@@ -69,11 +69,12 @@ export default {
 				return this.$api.toast('请输入密码');
 			}
 			try {
-				// await channelLogicApi.Login({
-				// 	loginCode: this.loginCode,
-				// 	password: this.password
-				// });
-				this.$api.navigateTo({ url: route.index });
+				let resp = await channelLogicApi.Login({
+					loginCode: this.loginCode,
+					password: this.password
+				});
+				uni.setStorageSync('account',JSON.stringify(resp));
+				this.$api.navigateTo({ url: route.router });
 			} catch (e) {
 				console.log(e);
 			}

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "x-popup": "/components/x-popup/x-popup"
+  }
+}

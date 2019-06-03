@@ -17,6 +17,9 @@
 <script>
 	import route from '@/config/route.js'
 	export default {
+		onLoad() {
+			// console.log(uni.getCurrentPages())
+		},
 		data() {
 			return {}
 		},

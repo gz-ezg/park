@@ -1,7 +1,8 @@
 const config = {
 	// 首页
 	index: '/pages/index/index',
-	
+	// 路由
+	router: '/pages/router/router',
 	// 企业
 	enterprise: "/pages/business/enterprise/enterprise",
 	finance: "/pages/business/finance/finance",
@@ -15,6 +16,7 @@ const config = {
 	latestPolicy: "/pages/tools/latestPolicy/latestPolicy",
 	patent: "/pages/tools/patent/patent",
 	subsidy: "/pages/tools/subsidy/subsidy",
+	subsidyDetail: "/pages/tools/subsidy/detail/detail",
 
 	// 登录页
 	login: "/pages/login/login",

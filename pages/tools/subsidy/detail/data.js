@@ -1,0 +1,340 @@
+module.exports  = {
+	"msg": "查询成功",
+	"data": {
+		"ruanZhu": [{
+			"rznum": 0,
+			"wgnum": 0,
+			"synum": 0,
+			"fmnum": 0
+		}],
+		"shenBao": [{
+			"id": 2,
+			"productname": "高新技术产品认定",
+			"concessions": "1",
+			"declaredate": "1",
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 4,
+			"productname": "中国制造2025",
+			"concessions": "1",
+			"declaredate": "1",
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 5,
+			"productname": "知识产权贯标",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 6,
+			"productname": "省/市工程技术中心",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 7,
+			"productname": "省/市企业技术中心",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 8,
+			"productname": "中国智能制造",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 9,
+			"productname": "众创空间登记/认定/专项",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 10,
+			"productname": "孵化器登记/认定/专项",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 11,
+			"productname": "领军人才项目",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 12,
+			"productname": "高品",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 13,
+			"productname": "广州市企业研发机构建设",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 14,
+			"productname": "广州市小巨人入库",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 15,
+			"productname": "高新技术企业培育入库项目",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 16,
+			"productname": "研究开发费用税前加计扣除",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 17,
+			"productname": "创新标杆百家企业",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 18,
+			"productname": "市/省研发后补助",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 19,
+			"productname": "省/市/区科技计划",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 20,
+			"productname": "电子商务示范单位",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 21,
+			"productname": "广州市新一代信息技术示范工程项目",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 22,
+			"productname": "技术先进型服务企业认定",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 23,
+			"productname": "广东省创新型企业",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 24,
+			"productname": "天河区移动互联网租金补贴",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 25,
+			"productname": "天河区科技专项服务资助",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 26,
+			"productname": "天河区科技攻关项目",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 27,
+			"productname": "省名牌企业",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 28,
+			"productname": "技术合同登记",
+			"concessions": null,
+			"declaredate": null,
+			"createby": 10059,
+			"createdate": "2018-10-30 16:09:33",
+			"updateby": null,
+			"updatedate": null,
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 29,
+			"productname": "test",
+			"concessions": "90",
+			"declaredate": "11",
+			"createby": 10059,
+			"createdate": "2018-10-30 15:06:59",
+			"updateby": 10059,
+			"updatedate": "2018-10-30 15:07:12",
+			"deleteflag": 0,
+			"rootorgcode": null
+		}, {
+			"id": 35,
+			"productname": "test",
+			"concessions": "123",
+			"declaredate": "20",
+			"createby": 10059,
+			"createdate": "2018-10-30 17:48:22",
+			"updateby": 10059,
+			"updatedate": "2018-10-30 17:48:22",
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}, {
+			"id": 36,
+			"productname": "邱十亿",
+			"concessions": "90",
+			"declaredate": "2018",
+			"createby": 10059,
+			"createdate": "2019-05-08 17:24:52",
+			"updateby": 10059,
+			"updatedate": "2019-05-08 17:24:52",
+			"deleteflag": 0,
+			"rootorgcode": "A04"
+		}],
+		"rongYu": [],
+		"userMsg": [{
+			"realname": "系统",
+			"mobilephone": ""
+		}],
+		"companyMsg": []
+	},
+	"msgCode": "40000",
+	"errCount": null,
+	"expandParams": null
+}

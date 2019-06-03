@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "x-loading": "/components/x-loading/x-loading"
+  }
+}

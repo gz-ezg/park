@@ -1,58 +1,61 @@
 <template>
 	<view class="index">
-		<image class="index__bg-top" src="../../static/index_top-bg.png"></image>
-		<image class="index__bg-bottom" src="../../static/index_bottom.png"></image>
-		<view @tap="navTo" class="index__header">
-			<view data-index="enterprise" class="index__header-item">
-				<image data-index="enterprise" src="../../static/index__icon1.png" class="icon"></image>
-				<view data-index="enterprise" class="title">企业名录</view>
+		<view :class="{ blur: loading }">
+			<image class="index__bg-top " src="../../static/index_top-bg.png"></image>
+			<image class="index__bg-bottom" src="../../static/index_bottom.png"></image>
+			<view @tap="navTo" class="index__header">
+				<view data-index="enterprise" class="index__header-item">
+					<image data-index="enterprise" src="../../static/index__icon1.png" class="icon"></image>
+					<view data-index="enterprise" class="title">企业名录</view>
+				</view>
+				<view data-index="highSalary" class="index__header-item">
+					<image data-index="highSalary" src="../../static/index__icon2.png" class="icon"></image>
+					<view data-index="highSalary" class="title">高新企业榜</view>
+				</view>
+				<view data-index="finance" class="index__header-item">
+					<image data-index="finance" src="../../static/index__icon3.png" class="icon"></image>
+					<view data-index="finance" class="title">获取财税服务</view>
+				</view>
 			</view>
-			<view data-index="highSalary" class="index__header-item">
-				<image data-index="highSalary" src="../../static/index__icon2.png" class="icon"></image>
-				<view data-index="highSalary" class="title">高新企业榜</view>
-			</view>
-			<view data-index="finance" class="index__header-item">
-				<image data-index="finance" src="../../static/index__icon3.png" class="icon"></image>
-				<view data-index="finance" class="title">获取财税服务</view>
+			<view class="index__body">
+				<view class="index__body-title">常用工具</view>
+				<view @tap="navTo" class="index__body-content">
+					<view data-index="latestPolicy" class="index__body-content-item">
+						<image data-index="latestPolicy" src="../../static/index_icons01.png" class="icon" mode=""></image>
+						<view data-index="latestPolicy" class="title">最新政策</view>
+					</view>
+					<view data-index="patent" class="index__body-content-item">
+						<image data-index="patent" src="../../static/index_icons02.png" class="icon" mode=""></image>
+						<view data-index="patent" class="title">专利荣誉查询</view>
+					</view>
+					<view data-index="abnormal" class="index__body-content-item">
+						<image data-index="abnormal" src="../../static/index_icons03.png" class="icon" mode=""></image>
+						<view data-index="abnormal" class="title">企业异常查询</view>
+					</view>
+				</view>
+				<view @tap="navTo" class="index__body-content">
+					<view data-index="bill" class="index__body-content-item">
+						<image data-index="bill" src="../../static/index_icons04.png" class="icon" mode=""></image>
+						<view data-index="bill" class="title">发票查验</view>
+					</view>
+					<view data-index="subsidy" class="index__body-content-item">
+						<image data-index="subsidy" src="../../static/index_icons05.png" class="icon" mode=""></image>
+						<view data-index="subsidy" class="title">政府补助测评</view>
+					</view>
+					<view data-index="income" class="index__body-content-item">
+						<image data-index="income" src="../../static/index_icons06.png" class="icon" mode=""></image>
+						<view data-index="income" class="title">个税测算</view>
+					</view>
+				</view>
+				<view @tap="call" class="index__body-button">一键呼叫园内财税管家</view>
+				<view class="index__text">
+					<view class="line"></view>
+					<view class="year">2019</view>
+					<view class="copyright">Copyright @2004 - 2019 xxxx.com 版权所有</view>
+				</view>
 			</view>
 		</view>
-		<view class="index__body">
-			<view class="index__body-title">常用工具</view>
-			<view @tap="navTo" class="index__body-content">
-				<view data-index="latestPolicy" class="index__body-content-item">
-					<image data-index="latestPolicy" src="../../static/index_icons01.png" class="icon" mode=""></image>
-					<view data-index="latestPolicy" class="title">最新政策</view>
-				</view>
-				<view data-index="patent" class="index__body-content-item">
-					<image data-index="patent" src="../../static/index_icons02.png" class="icon" mode=""></image>
-					<view data-index="patent" class="title">专利荣誉查询</view>
-				</view>
-				<view data-index="abnormal" class="index__body-content-item">
-					<image data-index="abnormal" src="../../static/index_icons03.png" class="icon" mode=""></image>
-					<view data-index="abnormal" class="title">企业异常查询</view>
-				</view>
-			</view>
-			<view @tap="navTo" class="index__body-content">
-				<view data-index="bill" class="index__body-content-item">
-					<image data-index="bill" src="../../static/index_icons04.png" class="icon" mode=""></image>
-					<view data-index="bill" class="title">发票查验</view>
-				</view>
-				<view data-index="subsidy" class="index__body-content-item">
-					<image data-index="subsidy" src="../../static/index_icons05.png" class="icon" mode=""></image>
-					<view data-index="subsidy" class="title">政府补助测评</view>
-				</view>
-				<view data-index="income" class="index__body-content-item">
-					<image data-index="income" src="../../static/index_icons06.png" class="icon" mode=""></image>
-					<view data-index="income" class="title">个税测算</view>
-				</view>
-			</view>
-			<view @tap="call" class="index__body-button">一键呼叫园内财税管家</view>
-			<view class="index__text">
-				<view class="line"></view>
-				<view class="year">2019</view>
-				<view class="copyright">Copyright @2004 - 2019 xxxx.com 版权所有</view>
-			</view>
-		</view>
+		<x-Loading :show="loading"></x-Loading>
 	</view>
 </template>
 
@@ -61,12 +64,25 @@ import route from '@/config/route.js';
 import { channelLogicApi } from '@/services/channelLogicApi.js';
 
 import { mapState, mapMutations } from 'vuex';
+let timer;
 export default {
 	data() {
-		return {};
+		return {
+			loading: false
+		};
 	},
 	onLoad() {},
-	onShow() {},
+	onShow() {
+		clearTimeout(timer);
+		timer = setTimeout(v => {
+			uni.reLaunch({
+				url: route.router
+			});
+		}, 20000);
+	},
+	onHide() {
+		clearTimeout(timer);
+	},
 	methods: {
 		navTo({ target: { dataset } }) {
 			this.$api.navigateTo({
@@ -74,11 +90,14 @@ export default {
 			});
 		},
 		async call() {
+			this.loading = true;
 			try {
 				await channelLogicApi.SendMsg();
 				this.$api.toast('呼叫成功');
 			} catch (e) {
 				this.$api.toast('呼叫失败');
+			} finally {
+				this.loading = false;
 			}
 		}
 	}
@@ -94,7 +113,6 @@ page {
 	height: 100%;
 	overflow: hidden;
 }
-
 .index {
 	width: 100%;
 	height: 100%;

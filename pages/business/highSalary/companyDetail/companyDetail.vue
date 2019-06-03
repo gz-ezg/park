@@ -1,55 +1,59 @@
 <template>
 	<view class="page">
-		<image class="bg" src="../../../../static/highSalary_bg.png"></image>
-		<view class="back" @tap="navBack">返回</view>
-		<view class="page__title">{{componyName}}</view>
-		<view class="page__body">
-			<view class="tab">
-				<view v-for="(item, index) in tabs" @tap="handleTab(index)" :class="{ active: index == tabIndex }" class="tab__item">{{ item.title }}</view>
+		<view :class="{ blur: loading }">
+			<image class="bg" src="../../../../static/highSalary_bg.png"></image>
+			<view class="back" @tap="navBack">返回</view>
+			<view class="page__title">{{ componyName }}</view>
+			<view class="page__body">
+				<view class="tab">
+					<view v-for="(item, index) in tabs" @tap="handleTab(index)" :class="{ active: index == tabIndex }" class="tab__item">{{ item.title }}</view>
+				</view>
+				<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
+					<block v-if="tabIndex == 0">
+						<view v-for="(item, index) in list" class="content-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="disc">
+								<view class="disc_item">名称：{{ item.XMMC }}</view>
+								<view class="disc_item">类型：{{ item.XMLB }}</view>
+								<view class="disc_item">年份：{{ item.NF }}</view>
+							</view>
+						</view>
+					</block>
+					<block v-if="tabIndex == 1">
+						<view v-for="(item, index) in list" class="content-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="disc">
+								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
+								<view class="disc_item">名称：{{ item['名称'] }}</view>
+								<view class="disc_item">申请号：{{ item['申请号'] }}</view>
+							</view>
+						</view>
+					</block>
+					<block v-if="tabIndex == 2">
+						<view v-for="(item, index) in list" class="content-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="disc">
+								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
+								<view class="disc_item">名称：{{ item['名称'] }}</view>
+								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
+							</view>
+						</view>
+					</block>
+					<block v-if="tabIndex == 3">
+						<view v-for="(item, index) in list" class="content-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="disc">
+								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
+								<view class="disc_item">名称：{{ item['名称'] }}</view>
+								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
+							</view>
+						</view>
+					</block>
+				</scroll-view>
 			</view>
-			<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
-				<block v-if="tabIndex == 0">
-					<view v-for="(item, index) in list" class="content-item">
-						<!-- <view class="title">广州奇异果科技有限公司</view> -->
-						<view class="disc">
-							<view class="disc_item">名称：{{ item.XMMC }}</view>
-							<view class="disc_item">类型：{{ item.XMLB }}</view>
-							<view class="disc_item">年份：{{ item.NF }}</view>
-						</view>
-					</view>
-				</block>
-				<block v-if="tabIndex == 1">
-					<view v-for="(item, index) in list" class="content-item">
-						<!-- <view class="title">广州奇异果科技有限公司</view> -->
-						<view class="disc">
-							<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-							<view class="disc_item">名称：{{ item['名称'] }}</view>
-							<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
-						</view>
-					</view>
-				</block>
-				<block v-if="tabIndex == 2">
-					<view v-for="(item, index) in list" class="content-item">
-						<!-- <view class="title">广州奇异果科技有限公司</view> -->
-						<view class="disc">
-							<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-							<view class="disc_item">名称：{{ item['名称'] }}</view>
-							<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
-						</view>
-					</view>
-				</block>
-				<block v-if="tabIndex == 3">
-					<view v-for="(item, index) in list" class="content-item">
-						<!-- <view class="title">广州奇异果科技有限公司</view> -->
-						<view class="disc">
-							<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-							<view class="disc_item">名称：{{ item['名称'] }}</view>
-							<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
-						</view>
-					</view>
-				</block>
-			</scroll-view>
 		</view>
+
+		<x-Loading :show="loading"></x-Loading>
 	</view>
 </template>
 
@@ -61,6 +65,7 @@ import { mapState, mapMutations } from 'vuex';
 export default {
 	data() {
 		return {
+			loading: true,
 			tabIndex: 0,
 			tabs: [
 				{
@@ -77,7 +82,7 @@ export default {
 				}
 			],
 			totalList: {},
-			list:[]
+			list: []
 		};
 	},
 	async onLoad({ componyName }) {
@@ -90,6 +95,8 @@ export default {
 			this.totalList = resp;
 		} catch (e) {
 			//TODO handle the exception
+		} finally {
+			this.loading = false;
 		}
 	},
 	methods: {
@@ -208,8 +215,9 @@ export default {
 			overflow: hidden;
 
 			&-item {
-				@include flex-center()// padding: 0 28upx 0 78upx;
-					position: relative;
+				@include flex-center();
+				// padding: 0 28upx 0 78upx;
+				position: relative;
 				padding-top: 1rpx;
 				height: 175upx;
 				border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
@@ -254,8 +262,5 @@ export default {
 			}
 		}
 	}
-<<<<<<< HEAD
 }
-=======
->>>>>>> ba5f982d158b0d0fc4e51ae7606ca6b504b3137d
 </style>
