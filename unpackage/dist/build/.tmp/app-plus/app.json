@@ -29,7 +29,7 @@
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "myapp",
+  "appname": "park",
   "compilerVersion": "1.9.9",
   "usingComponents": {
     "x-loading": "/components/x-loading/x-loading",

@@ -1,1 +1,1 @@
-<view style="width:100%;" bind:__l="__l"><rich-text nodes="{{text}}"></rich-text></view>
+<view class="body" bind:__l="__l"><rich-text nodes="{{text}}"></rich-text><view data-event-opts="{{[['tap',[['navBack',['$event']]]]]}}" class="fixed" bindtap="__e">返回首页</view></view>

@@ -1,13 +1,14 @@
 <template>
 	<view class="body">
 		<rich-text :nodes="text"></rich-text>
-		<view @tap="navBack" class="fixed">返回</view>
+		<view @tap="navBack" class="fixed">返回首页</view>
 	</view>
 </template>
 
 <script>
 import { channelLogicApi } from '@/services/channelLogicApi.js';
 import { dataList } from './data.js';
+import { queryURL } from '@/utils/index.js';
 export default {
 	data() {
 		return {
@@ -20,14 +21,10 @@ export default {
 	},
 	async onLoad({ companyname, name, tel }) {
 		this.companyname = companyname;
-		console.log(dataList);
+		let form = queryURL(location.href);
+		// console.log(location);
 		try {
-			// this.detail = await channelLogicApi.GovernmentSubsidies({
-			// 	companyname,
-			// 	tel,
-			// 	name,
-			// 	userid: '10510'
-			// });
+			this.detail = await channelLogicApi.GovernmentSubsidies(form);
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -36,8 +33,8 @@ export default {
 	},
 	methods: {
 		navBack() {
-			uni.navigateBack({
-				delta: 1
+			uni.navigateTo({
+				url: '/pages/index/index'
 			});
 		},
 		async get_report() {
@@ -231,21 +228,23 @@ page {
 	font-size: 30upx;
 }
 .body {
-	margin-top: 40upx;
-	padding: 20upx;
+	background: linear-gradient(180deg, rgba(255, 84, 38, 1) 0%, rgba(210, 9, 1, 1) 100%);
+	padding: 30upx;
+	padding-top: 40upx;
+	color: #fff;
 
 	.fixed {
 		position: fixed;
 		bottom: 100upx;
 		right: 60upx;
-		font-size: 16upx;
-		background: #f23f0f;
-		height: 78upx;
-		width: 78upx;
-		line-height: 78upx;
+		font-size: 20upx;
+		background: #fff;
+		height: 100upx;
+		width: 100upx;
+		line-height: 100upx;
 		text-align: center;
 		border-radius: 50%;
-		color: #fff;
+		color: #f23f0f;
 		box-shadow: 2px 2px 2px 2px rgba(226, 22, 22, 1);
 	}
 }

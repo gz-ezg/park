@@ -95,6 +95,10 @@ export default {
 			this.page = Number(this.page) + 1;
 			try {
 				const resp = await channelLogicApi.PolicyList({ city: this.myArea, title: this.title, page: this.page, pageSize: this.pageSize });
+				if (!resp.result.length) {
+					this.$api.toast('查询暂无结果');
+					this.page = 0;
+				}
 				this.hasMore = resp.total > this.page * this.pageSize ? true : false;
 
 				this.list = [...this.list, ...resp.result];

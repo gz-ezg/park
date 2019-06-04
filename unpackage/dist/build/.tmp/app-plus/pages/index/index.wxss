@@ -46,22 +46,22 @@ page {
     height: 280rpx;
 }
 .index__header {
+    position: relative;
+    top: -140rpx;
+    margin: 0 auto;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: space-evenly;
-    -webkit-justify-content: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
-    position: relative;
-    top: -80rpx;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+}
+.index__header .mlr-30 {
+      margin: 0 0rpx;
 }
 .index__header-item {
+      margin: 0 20rpx;
       width: 211rpx;
       height: 256rpx;
       background: white;
@@ -84,7 +84,7 @@ page {
 .index__body {
     overflow: none;
     position: relative;
-    margin: -40rpx auto 0;
+    margin: -120rpx auto 0;
     width: 683rpx;
     height: 433rpx;
     background: white;

@@ -10,25 +10,53 @@
 			</view>
 			<view class="item">
 				<view class="title">负责人名称</view>
-				<input @blur="handleInput" data-name="tel" class="item__iput" placeholder="请输入负责人名称" />
+				<input @blur="handleInput" data-name="name" class="item__iput" placeholder="请输入负责人名称" />
 			</view>
 			<view class="item">
 				<view class="title">联系方式</view>
-				<input type="number" maxlength="11" @blur="handleInput" data-name="name" class="item__iput" placeholder="请输入手机号码" />
+				<input type="number" maxlength="11" @blur="handleInput" data-name="tel" class="item__iput" placeholder="请输入手机号码" />
 			</view>
 			<view @tap="handleSubmit" class="button">立即提交</view>
 			<image src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
 		</view>
 		<view v-if="isKown" class="tip">
-			<image class="img" src="" mode=""></image>
+			<image class="img" src="../../../static/qrcode1.png" ></image>
 			<text class="text">扫码可以在手机上使用哦</text>
 			<button @tap="handleIkown" class="button">我知道了</button>
 			<view class="trangle"></view>
 		</view>
 
-		<x-popup :show="show" @hidePopup="hidePopup">
-			<view class="popus"><image src="../../../static/pop.png" class="popus__img"></image></view>
+		<x-popup :icon="false" :show="popup" @hidePopup="hidePopup">
+			<view class="popus">
+				<image src="../../../static/pop.png" class="popus__img"></image>
+				<view class="popus__top">
+					<view class="popus__top-title">一键查询政府补贴</view>
+					<view class="popus__top-disc">项目申报：政策补贴最高300W</view>
+				</view>
+				<view class="popus__bottom">
+					<view class="popus__bottom-pic">
+						<image :src="imgUrl"></image>
+						<tki-qrcode
+							ref="qrcode"
+							:val="val"
+							:size="size"
+							:show="false"
+							:unit="unit"
+							:pdground="pdground"
+							:icon="icon"
+							:onval="onval"
+							:loadMake="loadMake"
+							:showLoading="showLoading"
+							:loadingText="loadingText"
+							@result="qrR"
+						/>
+					</view>
+					<view class="popus__bottom-title">扫描二维码获得具体项目及财税方案</view>
+					<view @tap="hidePopup" class="popus__bottom-button">关闭</view>
+				</view>
+			</view>
 		</x-popup>
+
 		<x-loading :show="show"></x-loading>
 	</view>
 </template>
@@ -38,18 +66,36 @@ import { channelLogicApi } from '@/services/channelLogicApi.js';
 import xPopup from '@/components/x-popup/x-popup.vue';
 import xLoading from '@/components/x-loading/x-loading.vue';
 import route from '@/config/route.js';
+import { getUrlQuery } from '@/utils/index.js';
+
+import tkiQrcode from '@/components/tki-qrcode/tki-qrcode.vue';
 
 export default {
 	data() {
 		return {
+			imgUrl: '',
+			popup: false,
 			from: {},
 			show: false,
-			isKown: true
+			isKown: true,
+			ifShow: false,
+			val: '', // 要生成的二维码值
+			size: 220, // 二维码大小
+			unit: 'upx', // 单位
+			pdground: '#32dbc6', // 角标色
+			icon: '', // 二维码图标
+			iconsize: 10, // 二维码图标大小
+			onval: true, // val值变化时自动重新生成二维码
+			loadMake: true, // 组件加载完成后自动生成二维码
+			src: '', // 二维码生成后的图片地址或base64
+			showLoading: true,
+			loadingText: 'jiazaizhong'
 		};
 	},
 	components: {
 		xPopup,
-		xLoading
+		xLoading,
+		tkiQrcode
 	},
 
 	methods: {
@@ -58,6 +104,13 @@ export default {
 		},
 		handleIkown() {
 			this.isKown = false;
+		},
+		qrR(e) {
+			this.imgUrl = e;
+			console.log(e);
+		},
+		hidePopup() {
+			this.popup = false;
 		},
 		navBack() {
 			uni.navigateTo({
@@ -75,12 +128,27 @@ export default {
 			if (!tel) {
 				return this.$api.toast('联系方式不能为空');
 			}
-			this.$api.navigateTo({ url: route.subsidyDetail, data: {
-				companyname,
-				tel,
-				name
-			} });
 
+			// this.$api.navigateTo({
+			// 	url: route.subsidyDetail,
+			// 	data: {
+			// 		companyname,
+			// 		tel,
+			// 		name
+			// 	}
+			// });
+			// console.log(getUrlQuery('http://localhost:3333/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).)
+			let url = getUrlQuery('http://www.yrl.fun/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).url;
+
+			try {
+				// let resp = await channelLogicApi.GetShortUrl({ url: url });
+				// console.log(resp);
+				this.val = url;
+				this.$refs.qrcode._makeCode();
+				this.popup = true;
+			} catch (e) {
+				//TODO handle the exception
+			}
 		}
 	}
 };
@@ -104,12 +172,59 @@ export default {
 	.popus {
 		width: 550upx;
 		height: 733upx;
+		text-align: center;
 
 		&__img {
 			transform: scale(1.1);
 			// box-shadow: 0px 11upx 17upx 0upx rgba(0, 0, 0, 0.24);
 			height: 100%;
 			width: 100%;
+		}
+
+		&__top {
+			@include absolute-center-top(50upx);
+			&-title {
+				font-size: 33upx;
+				font-weight: 500;
+				color: rgba(44, 34, 34, 1);
+			}
+			&-disc {
+				font-size: 22upx;
+				font-weight: 400;
+				color: rgba(125, 131, 134, 1);
+			}
+		}
+
+		&__bottom {
+			@include absolute-center-top(300upx);
+			&-pic {
+				width: 220upx;
+				height: 220upx;
+				margin: 0 auto;
+				image {
+					width: 220upx;
+					height: 220upx;
+				}
+			}
+			&-title {
+				font-size: 22upx;
+				font-weight: 400;
+				color: rgba(44, 34, 34, 1);
+				margin: 30upx 0;
+			}
+			&-button {
+				margin: 0 auto;
+				width: 125upx;
+				position: relative;
+				z-index: 2;
+				height: 44upx;
+				font-size: 22upx;
+				font-weight: 400;
+				color: rgba(255, 255, 255, 1);
+				background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
+				border-radius: 6upx;
+				line-height: 44upx;
+			}
 		}
 	}
 

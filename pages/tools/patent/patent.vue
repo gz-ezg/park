@@ -16,45 +16,49 @@
 				<view @tap="handleDetail(item.company_name)" v-for="(item, index) in list" :key="item.id" class="content-item">{{ item.company_name }}</view>
 			</scroll-view>
 		</view>
-		<x-popup @hidePopup="hidePopup" bgColor="#fff" @ title="测试结果" :show="popup">
-			<view class="page__body">
+		<x-popup @hidePopup="hidePopup" bgColor="#fff" @ :title="componyName" :show="popup">
+			<view class="page__bodys">
 				<view class="tab">
 					<view v-for="(item, index) in tabs" @tap="handleTab(index)" :class="{ active: index == tabIndex }" class="tab__item">{{ item.title }}</view>
 				</view>
 				<scroll-view class="contents" scroll-y="true" scroll-with-animation="true">
 					<block v-if="tabIndex == 0">
-						<view v-for="(item, index) in detailList" class="content-item">
-							<view class="disc">
-								<view class="disc_item">名称：{{ item.XMMC }}</view>
-								<view class="disc_item">类型：{{ item.XMLB }}</view>
-								<view class="disc_item">年份：{{ item.NF }}</view>
+						<view v-for="(item, index) in detailList" class="contents-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="discs">
+								<view class="discs_item">名称：{{ item.XMMC }}</view>
+								<view class="discs_item">类型：{{ item.XMLB }}</view>
+								<view class="discs_item">年份：{{ item.NF }}</view>
 							</view>
 						</view>
 					</block>
 					<block v-if="tabIndex == 1">
-						<view v-for="(item, index) in list" class="content-item">
-							<view class="disc">
-								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-								<view class="disc_item">名称：{{ item['名称'] }}</view>
-								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
+						<view v-for="(item, index) in detailList" class="contents-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="discs">
+								<view class="discs_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
+								<view class="discs_item">名称：{{ item['名称'] }}</view>
+								<view class="discs_item">申请号：{{ item['申请号'] }}</view>
 							</view>
 						</view>
 					</block>
 					<block v-if="tabIndex == 2">
-						<view v-for="(item, index) in list" class="content-item">
-							<view class="disc">
-								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-								<view class="disc_item">名称：{{ item['名称'] }}</view>
-								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
+						<view v-for="(item, index) in detailList" class="contents-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="discs">
+								<view class="discs_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
+								<view class="discs_item">名称：{{ item['名称'] }}</view>
+								<view class="discs_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
 							</view>
 						</view>
 					</block>
 					<block v-if="tabIndex == 3">
-						<view v-for="(item, index) in list" class="content-item">
-							<view class="disc">
-								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
+						<view v-for="(item, index) in detailList" class="contents-item">
+							<!-- <view class="title">广州奇异果科技有限公司</view> -->
+							<view class="discs">
+								<view class="discs_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
 								<view class="disc_item">名称：{{ item['名称'] }}</view>
-								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
+								<view class="discs_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
 							</view>
 						</view>
 					</block>
@@ -77,6 +81,7 @@ export default {
 			popup: false,
 			tabIndex: 0,
 			detailList: [],
+			componyName:'',
 			tabs: [
 				{
 					title: '荣誉'
@@ -102,7 +107,8 @@ export default {
 			});
 		},
 		async handleDetail(componyName) {
-			console.log(componyName);
+			this.list = [];
+			this.componyName = componyName;
 			try {
 				const resp = await channelLogicApi.CompanyHonorByName({ componyName });
 				this.detailList = resp.rongyu;
@@ -240,17 +246,16 @@ export default {
 			}
 		}
 	}
-	&__body {
-		// @include absolute-center-top(400upx);
+	&__bodys {
 		width: 683upx;
 		height: 700upx;
-
+	
 		.tab {
 			display: flex;
 			background: #ffffff;
 			border-bottom: 1upx solid rgba(93, 72, 67, 0.1);
 			border-radius: 11upx 11upx 0 0;
-
+	
 			&__item {
 				position: relative;
 				flex: 1;
@@ -261,10 +266,10 @@ export default {
 				font-weight: 600;
 				color: rgba(44, 34, 34, 1);
 			}
-
+	
 			.active {
 				color: #e21616;
-
+	
 				&:after {
 					content: '';
 					position: absolute;
@@ -279,7 +284,7 @@ export default {
 				}
 			}
 		}
-
+	
 		.contents {
 			width: 683upx;
 			height: 700upx;
@@ -287,7 +292,7 @@ export default {
 			box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
 			border-radius: 0 0 11upx 11upx;
 			overflow: hidden;
-
+	
 			&-item {
 				@include flex-center();
 				// padding: 0 28upx 0 78upx;
@@ -295,7 +300,7 @@ export default {
 				padding-top: 1rpx;
 				height: 175upx;
 				border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
-
+	
 				.title {
 					margin: 16upx 0;
 					font-size: 25upx;
@@ -303,18 +308,18 @@ export default {
 					color: rgba(44, 34, 34, 1);
 					line-height: 40upx;
 				}
-
-				.disc {
+	
+				.discs {
 					font-size: 19upx;
 					font-weight: 400;
 					color: rgba(125, 131, 134, 1);
 					width: 606upx;
-
-					&_item {
+	
+					&_items {
 						margin: 0 0 10upx 0;
 					}
 				}
-
+	
 				.button {
 					position: absolute;
 					right: 28upx;
@@ -329,7 +334,7 @@ export default {
 					background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
 					box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
 				}
-
+	
 				.button_gray {
 					background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
 				}

@@ -9,7 +9,7 @@
           'uni-close-right': buttonMode === 'right'
         }"
 			 class=" uni-icon uni-icon-close" @click="closeMask" /> -->
-			<view @click="closeMask" class="iconfont icon-iccloes x-close"></view>
+			<view v-if="icon" @click="closeMask" class="iconfont icon-iccloes x-close"></view>
 		</view>
 	</view>
 </template>
@@ -36,6 +36,10 @@ export default {
 		title: {
 			type: String,
 			default: ''
+		},
+		icon: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data() {
@@ -47,7 +51,8 @@ export default {
 		},
 		closeMask() {
 			this.$emit('hidePopup');
-		}
+		},
+		moveHandle() {}
 	}
 };
 </script>

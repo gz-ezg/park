@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "x-popup": "/components/x-popup/x-popup",
+    "x-loading": "/components/x-loading/x-loading",
+    "tki-qrcode": "/components/tki-qrcode/tki-qrcode"
+  }
+}

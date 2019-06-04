@@ -195,7 +195,12 @@
         line-height: 40rpx;
         padding-right: 10rpx;
         overflow: hidden;
-        width: 683rpx;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
 }
 .page .content-item .disc {
         font-size: 19rpx;

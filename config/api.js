@@ -5,6 +5,11 @@ export const apiRoute = {
 			type: 'post',
 		},
 
+		GetShortUrl: {
+			url: '/channel/garden/getShortUrl',
+			type: 'get',
+		},
+
 		SendMsg: {
 			url: '/channel/garden/sendMsg',
 			type: 'get',
@@ -49,6 +54,10 @@ export const apiRoute = {
 		},
 		QueryChannelCompnyByName: {
 			url: '/channel/garden/queryChannelCompnyByName',
+			type: 'get',
+		},
+		Calculate: {
+			url: '/store/tools/tax/calculate',
 			type: 'get',
 		}
 	}

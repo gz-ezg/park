@@ -51,6 +51,12 @@
     font-weight: 700;
     line-height: 78rpx;
     color: #2c2222;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 .x-popup-middle {
   top: 50%;

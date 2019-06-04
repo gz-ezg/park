@@ -76,7 +76,7 @@ export default {
 				uni.setStorageSync('account',JSON.stringify(resp));
 				this.$api.navigateTo({ url: route.router });
 			} catch (e) {
-				console.log(e);
+				return this.$api.toast('密码不正确');
 			}
 		}
 	}

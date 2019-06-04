@@ -18,7 +18,7 @@ export const formatDate = (timestamp = new Date().valueOf(), fmt = 'yyyy-MM-dd h
 	// if (typeof timestamp === 'string') {
 	// 	timestamp = parseInt(timestamp, 10);
 	// }
-	if(!timestamp) {
+	if (!timestamp) {
 		return ''
 	}
 	const date = new Date(timestamp);
@@ -166,3 +166,17 @@ export const dataMask = (str, type) => {
 
 	return result;
 };
+export const queryURL = (url) => {
+
+	let arr1 = url.split("?");
+
+	let params = arr1[1].split("&");
+
+	let obj = {}; //声明对象
+
+	for (let i = 0; i < params.length; i++) {
+		let param = params[i].split("=");
+		obj[param[0]] = param[1];
+	}
+	return obj;
+}

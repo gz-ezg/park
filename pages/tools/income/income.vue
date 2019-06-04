@@ -10,30 +10,30 @@
 			</view>
 			<view class="item">
 				<view class="title">月收入</view>
-				<input @blur="handleInput" data-name="companyname" type="number" class="item__iput" placeholder="请输入当前月收入" />
+				<input @blur="handleInput" data-name="monthIncome" type="number" class="item__iput" placeholder="请输入当前月收入" />
 			</view>
 			<view class="item">
 				<view class="title">起征点</view>
-				<input @blur="handleInput" disabled data-name="tel" class="item__iput" placeholder="5000" />
+				<input disabled data-name="tel" class="item__iput" placeholder="5000" />
 			</view>
 			<view v-if="tabIndex == 0" class="item">
 				<view class="title">无险一金</view>
-				<input @blur="handleInput" data-name="name" class="item__iput" type="number" placeholder="请输入您每月实缴五险一金" />
+				<input @blur="handleInput" data-name="insurance" class="item__iput" type="number" placeholder="请输入您每月实缴五险一金" />
 			</view>
 			<view v-if="tabIndex == 1" class="item">
 				<view class="title">社保基数</view>
-				<input @blur="handleInput" data-name="name" class="item__iput" type="number" placeholder="请输入社保基数" />
+				<input @blur="handleInput" data-name="insuranceBase" class="item__iput" type="number" placeholder="请输入社保基数" />
 			</view>
 			<view v-if="tabIndex == 1" class="item">
 				<view class="title">公积金基数</view>
-				<input @blur="handleInput" data-name="name" class="item__iput" type="number" placeholder="请输入公积金基数" />
+				<input @blur="handleInput" data-name="reserveFundBase" class="item__iput" type="number" placeholder="请输入公积金基数" />
 			</view>
-			<view v-if="tabIndex == 1" class="item">
+			<!-- 			<view v-if="tabIndex == 1" class="item">
 				<view class="title">公积金比例</view>
 				<input @blur="handleInput" data-name="name" class="item__iput" type="number" placeholder="请输入公积金比例" />
-			</view>
+			</view> -->
 			<view @tap="handleNext" class="button">下一步</view>
-			<image src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
+			<image @tap="handleIsKown" src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
 		</view>
 
 		<view v-if="next" class="page__body">
@@ -49,15 +49,15 @@
 				<view class="right">
 					<view class="item">
 						<view class="title">抵扣方式</view>
-						<view class="select_button select_active">单独使用</view>
-						<view class="select_button">共同使用</view>
+						<view @tap="handleSelect" data-name="only" :class="{ select_active: form.childrenUseNum == 1 }" class="select_button ">单独使用</view>
+						<view @tap="handleSelect" data-name="common" :class="{ select_active: form.childrenUseNum == 2 }" class="select_button">共同使用</view>
 					</view>
 					<view class="item">
 						<view class="title">子女数</view>
 						<view class="input_number">
-							<image src="../../../static/jianhao.png" mode=""></image>
-							<view class="number">1</view>
-							<image src="../../../static/jiahao.png" mode=""></image>
+							<image src="../../../static/jianhao.png" data-name="less" @tap="handleNumber"></image>
+							<view class="number">{{ form['childrenNum'] }}</view>
+							<image src="../../../static/jiahao.png" data-name="plus" @tap="handleNumber"></image>
 						</view>
 					</view>
 				</view>
@@ -67,8 +67,8 @@
 				<view class="right">
 					<view class="item">
 						<view class="title">抵扣方式</view>
-						<view class="select_button">学历：4800</view>
-						<view class="select_button">技术：3600</view>
+						<view @tap="handleSelect" data-name="xueli" :class="{ select_active: form.adultEducation == 4800 }" class="select_button">学历：4800</view>
+						<view @tap="handleSelect" data-name="jishu" :class="{ select_active: form.adultEducation == 3600 }" class="select_button">技术：3600</view>
 					</view>
 				</view>
 			</view>
@@ -77,48 +77,49 @@
 				<view class="right">
 					<view class="item">
 						<view class="title">兄妹数</view>
-						<view class="select_button">学历：4800</view>
-						<view class="select_button">技术：3600</view>
+						<view class="input_number">
+							<image data-name="less1" @tap="handleNumber" src="../../../static/jianhao.png"></image>
+							<view class="number">{{ form['brotherNum'] }}</view>
+							<image data-name="plus1" @tap="handleNumber" src="../../../static/jiahao.png"></image>
+						</view>
 					</view>
 				</view>
 			</view>
 			<view class="content">
-				<view class="left">继续教育</view>
+				<view class="left">住房支出</view>
 				<view class="right">
-					<view class="item">
-						<view class="title">抵扣方式</view>
-						<view class="select_button">学历：4800</view>
-						<view class="select_button">技术：3600</view>
-					</view>
+					<view class="item"><input class="ml-4" @blur="handleInput" type="number" data-name="housing" placeholder="请输入住房支出" /></view>
 				</view>
 			</view>
 			<view class="content">
-				<view class="left">继续教育</view>
+				<view class="left">大病医疗支出</view>
 				<view class="right">
-					<view class="item">
-						<view class="title">抵扣方式</view>
-						<view class="select_button">学历：4800</view>
-						<view class="select_button">技术：3600</view>
-					</view>
+					<view class="item"><input class="ml-4" @blur="handleInput" type="number" data-name="medicalExpenses" placeholder="大病医疗支出" /></view>
 				</view>
 			</view>
 			<view @tap="handleSubmit" class="button">计算</view>
-			<image src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
+			<image @tap="handleIsKown" src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
 		</view>
 
-		<x-popup bg-color="#fff" :title="title" :show="show" @hidePopup="hidePopup">
+		<view v-if="isKown" class="tip">
+			<image class="img" src="../../../static/qrcode3.png"></image>
+			<text class="text">扫码可以在手机上使用哦</text>
+			<button @tap="handleIsKown" class="button">我知道了</button>
+			<view class="trangle"></view>
+		</view>
+		<x-popup @hidePopup="hidePopup" bg-color="#fff" :title="title" :show="show">
 			<view class="content">
 				<view class="content-item">
 					<text class="title">应付工资</text>
-					<text>9500</text>
+					<text>{{ result.taxbefore }}</text>
 				</view>
 				<view class="content-item">
 					<text class="title">应缴个税</text>
-					<text>9500</text>
+					<text>{{ result.taxTotal }}</text>
 				</view>
 				<view class="content-item">
 					<text class="title">税后工资</text>
-					<text>9500</text>
+					<text>{{ result.taxAfter }}</text>
 				</view>
 
 				<view class="chart"><canvas canvas-id="canvasRing" id="canvasRing" class="charts"></canvas></view>
@@ -148,7 +149,22 @@ export default {
 			serverData: '',
 			show: false,
 			title: '计算结果',
-			next: false
+			next: false,
+			result: { taxbefore: '', taxTotal: '', taxAfter: '' },
+			isKown: true,
+			form: {
+				brotherNum: '1',
+				housing: '',
+				medicalExpenses: '',
+				adultEducation: '',
+				type: '',
+				childrenUseNum: 1,
+				childrenNum: '1',
+				insurance: '',
+				insuranceBase: '',
+				reserveFundBase: '',
+				monthIncome: ''
+			}
 		};
 	},
 	onLoad() {
@@ -158,19 +174,102 @@ export default {
 		this.getServerData();
 	},
 	methods: {
+		hidePopup() {
+			console.log('ee');
+			this.show = false;
+		},
 		navBack() {
+			if (this.next) {
+				(this.form = {
+					brotherNum: '1',
+					housing: '',
+					medicalExpenses: '',
+					adultEducation: '',
+					type: '',
+					childrenUseNum: 1,
+					childrenNum: '1',
+					insurance: '',
+					insuranceBase: '',
+					reserveFundBase: '',
+					monthIncome: ''
+				}),
+					(this.next = false);
+				return;
+			}
 			uni.navigateTo({
 				url: route.index
 			});
+		},
+		handleNumber({
+			currentTarget: {
+				dataset: { name }
+			}
+		}) {
+			if (name == 'less') {
+				if (!this.form.childrenNum) {
+					return;
+				}
+				this.form.childrenNum = this.form.childrenNum * 1 - 1;
+			}
+			if (name == 'plus') {
+				this.form.childrenNum = this.form.childrenNum * 1 + 1;
+			}
+			if (name == 'less1') {
+				if (!this.form.brotherNum) {
+					return;
+				}
+				this.form.brotherNum = this.form.brotherNum * 1 - 1;
+			}
+			if (name == 'plus1') {
+				this.form.brotherNum = this.form.brotherNum * 1 + 1;
+			}
+		},
+		handleSelect({
+			currentTarget: {
+				dataset: { name }
+			}
+		}) {
+			if (name == 'only') {
+				this.form.childrenUseNum = 1;
+			}
+			if (name == 'common') {
+				this.form.childrenUseNum = 2;
+			}
+			if (name == 'xueli') {
+				this.form.adultEducation = 4800;
+			}
+			if (name == 'jishu') {
+				this.form.adultEducation = 3600;
+			}
+		},
+		handleIsKown() {
+			this.isKown = !this.isKown;
+		},
+		handleInput({
+			currentTarget: {
+				dataset: { name }
+			},
+			detail: { value }
+		}) {
+			this.form[name] = value;
 		},
 		changeTab(index) {
 			let { tabIndex } = this;
 			if (tabIndex == index) {
 				return;
 			}
+			if (index == 1) {
+				this.form.type = 'specialty';
+			}
+			if (index == 0) {
+				this.form.type = '';
+			}
 			this.tabIndex = index;
 		},
 		handleNext() {
+			if (!this.form.monthIncome) {
+				return this.$api.toast('请输入当前月收入');
+			}
 			this.next = true;
 		},
 		handlePopus(e) {
@@ -179,14 +278,21 @@ export default {
 		hidePopup(e) {
 			this.show = !this.show;
 		},
-		handleSubmit() {
+		async handleSubmit() {
 			this.show = true;
-			this.getServerData();
+			try {
+				let resp = await channelLogicApi.Calculate(this.form);
+				this.result = resp;
+				this.getServerData(resp);
+			} catch (e) {
+				//TODO handle the exception
+			}
 		},
-		getServerData() {
-			_self.showRing('canvasRing');
+		getServerData(data) {
+			this.popup = true;
+			_self.showRing('canvasRing', data);
 		},
-		showRing(canvasId, chartData) {
+		showRing(canvasId, data = { taxbefore: '', taxAfter: '', taxTotal: '' }) {
 			canvaRing = new uCharts({
 				$this: _self,
 				canvasId: canvasId,
@@ -197,16 +303,16 @@ export default {
 				pixelRatio: _self.pixelRatio,
 				series: [
 					{
-						name: '三班',
-						data: 20
+						name: '应付工资',
+						data: data.taxbefore || 0
 					},
 					{
-						name: '四班',
-						data: 18
+						name: '应缴个税',
+						data: data.taxAfter || 0
 					},
 					{
-						name: '五班',
-						data: 8
+						name: '税后工资',
+						data: data.taxTotal || 0
 					}
 				],
 				animation: true,
@@ -232,7 +338,9 @@ export default {
 		width: 100%;
 		height: 100%;
 	}
-
+	.ml-4 {
+		margin-left: 10upx;
+	}
 	.back {
 		position: absolute;
 		width: 125upx;
@@ -250,7 +358,8 @@ export default {
 	}
 
 	&__body {
-		@include absolute-center-top(406upx) width: 683upx;
+		@include absolute-center-top(306upx);
+		width: 683upx;
 		// height: 489upx;
 		padding: 11upx 0 0 0;
 		background: rgba(255, 255, 255, 1);
@@ -273,9 +382,9 @@ export default {
 				margin-bottom: 20upx;
 			}
 			.left {
-				padding: 28upx 0;
+				padding: 28upx 15upx;
 				@include flex-center();
-
+				box-sizing: border-box;
 				flex-direction: column;
 				width: 167upx;
 				font-size: 22upx;
@@ -429,6 +538,50 @@ export default {
 
 		.chart {
 			height: 307upx;
+		}
+	}
+	.tip {
+		@include absolute-center-top(850upx);
+		display: flex;
+		align-items: center;
+		margin: 0 auto;
+		width: 683upx;
+		height: 133upx;
+		border-radius: 11upx;
+		background: rgba(53, 53, 53, 1);
+		.img {
+			margin: 0 33upx;
+			width: 78upx;
+			height: 78upx;
+			background: rgba(255, 255, 255, 1);
+			border-radius: 3upx;
+		}
+		.text {
+			flex: 1;
+			font-size: 22upx;
+			font-weight: 400;
+			color: rgba(255, 255, 255, 1);
+		}
+		.button {
+			text-align: center;
+			line-height: 33upx;
+			height: 33upx;
+			background: rgba(255, 255, 255, 1);
+			border-radius: 6upx;
+			font-size: 17upx;
+			font-weight: 400;
+			color: rgba(53, 53, 53, 1);
+			margin: 0 33upx;
+			padding: 0 10upx;
+		}
+		.trangle {
+			position: absolute;
+			right: 20upx;
+			top: -36upx;
+			border-top: 20upx transparent dashed;
+			border-left: 20upx transparent dashed;
+			border-right: 20upx transparent dashed;
+			border-bottom: 20upx rgba(53, 53, 53, 1) solid;
 		}
 	}
 }

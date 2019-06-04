@@ -8,7 +8,7 @@
 					<image data-index="enterprise" src="../../static/index__icon1.png" class="icon"></image>
 					<view data-index="enterprise" class="title">企业名录</view>
 				</view>
-				<view data-index="highSalary" class="index__header-item">
+				<view data-index="highSalary" class="index__header-item mlr-30">
 					<image data-index="highSalary" src="../../static/index__icon2.png" class="icon"></image>
 					<view data-index="highSalary" class="title">高新企业榜</view>
 				</view>
@@ -133,11 +133,16 @@ page {
 	}
 
 	&__header {
-		@include flex-evenly();
 		position: relative;
-		top: -80upx;
-
+		top: -140upx;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-around;
+		.mlr-30 {
+			margin: 0 0upx;
+		}
 		&-item {
+			margin: 0 20upx;
 			width: 211upx;
 			height: 256upx;
 			background: rgba(255, 255, 255, 1);
@@ -163,7 +168,7 @@ page {
 	&__body {
 		overflow: none;
 		position: relative;
-		margin: -40upx auto 0;
+		margin: -120upx auto 0;
 		width: 683upx;
 		height: 433upx;
 		background: rgba(255, 255, 255, 1);
