@@ -44,7 +44,7 @@
 				<image @tap="handleIsKown" src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
 			</view>
 			<view v-if="isKown" class="tip">
-				<image class="img" src="../../../static/qrcode1.png" mode=""></image>
+				<image class="img" src="../../../static/qrcode_bill.png" mode=""></image>
 				<text class="text">扫码可以在手机上使用哦</text>
 				<button @tap="handleIkown" class="button">我知道了</button>
 				<view class="trangle"></view>
@@ -248,8 +248,8 @@ export default {
 .page {
 	width: 100%;
 	height: 100vh;
-	min-height: 1000upx;
-	overflow: auto;
+	min-height: 1334upx;
+	overflow: hidden;
 
 	> view {
 		width: 100%;
@@ -258,6 +258,7 @@ export default {
 	.bg {
 		width: 100%;
 		height: 100%;
+		min-height: 1334upx;
 	}
 	.scroll {
 		height: 800upx;

@@ -59,6 +59,14 @@ export const apiRoute = {
 		Calculate: {
 			url: '/store/tools/tax/calculate',
 			type: 'get',
-		}
+		},
+		Business: {
+			url: '/channel/garden/business',
+			type: 'get',
+		},
+		Etax: {
+			url: '/channel/garden/etax',
+			type: 'get',
+		},
 	}
 }

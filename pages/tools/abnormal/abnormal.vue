@@ -3,7 +3,7 @@
 		<image class="bg" src="../../../static/abnormal_bg.png" mode=""></image>
 		<view class="back" @tap="navBack">返回</view>
 		<view class="search">
-			<view @tap="showPicture" class="search__left"><image src="../../../static/search__left.png" mode=""></image></view>
+			<view @tap="handleIkown" class="search__left"><image src="../../../static/search__left.png" mode=""></image></view>
 			<view class="search__input">
 				<!-- <input placeholder="清收s" /> -->
 				<input @blur="onBlur" type="text" />
@@ -11,63 +11,41 @@
 			<view @tap="handleSearch" class="search__right"><image src="../../../static/search__input.png" mode=""></image></view>
 		</view>
 
-		<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
-			<view v-for="(item, index) in list" class="content-item" :key="item.id">
-				<view class="title">{{ item.company_name }}</view>
-			</view>
-			<!-- <view @tap="showDetail" class="content-item"><view class="title">信息有限公司</view></view> -->
-		</scroll-view>
-
 		<view v-if="isKown" class="tip">
-			<image class="img" src="" mode=""></image>
+			<image class="img" src="../../../static/qrcode_adm.png" mode=""></image>
 			<text class="text">扫码可以在手机上使用哦</text>
 			<button @tap="handleIkown" class="button">我知道了</button>
 			<view class="trangle"></view>
 		</view>
 
-		<x-popup @hidePopup="hidePopup" bgColor="#fff" @ title="测试结果" :show="popup">
+		<x-popup @hidePopup="hidePopup" bgColor="#fff" @ :title="componyName" :show="popup">
 			<view class="page__body">
 				<view class="tab">
 					<view v-for="(item, index) in tabs" @tap="handleTab(index)" :class="{ active: index == tabIndex }" class="tab__item">{{ item.title }}</view>
 				</view>
-				<!-- <scroll-view class="content" scroll-y="true" scroll-with-animation="true">
+				<scroll-view class="contents" scroll-y="true" scroll-with-animation="true">
 					<block v-if="tabIndex == 0">
-						<view v-for="(item, index) in list" class="content-item">
+						<view v-for="(item, index) in businessList" class="contents-item">
 							<view class="disc">
-								<view class="disc_item">名称：{{ item.XMMC }}</view>
-								<view class="disc_item">类型：{{ item.XMLB }}</view>
-								<view class="disc_item">年份：{{ item.NF }}</view>
+								<view class="disc_item">列入经营异常名录原因：{{ item.abnormal_cause }}</view>
+								<view class="disc_item">决定机关：{{ item.office }}</view>
+								<view class="disc_item">列入日期：{{ item.abnormal_date }}</view>
+								<view class="disc_item">移出日期：{{ item.remove_date }}</view>
 							</view>
 						</view>
+						<view class="no_data" v-if="!businessList.length">暂无数据</view>
 					</block>
 					<block v-if="tabIndex == 1">
-						<view v-for="(item, index) in list" class="content-item">
+						<view v-for="(item, index) in etaxList" class="contents-item">
 							<view class="disc">
-								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-								<view class="disc_item">名称：{{ item['名称'] }}</view>
-								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
+								<view class="disc_item">税种：{{ item['zsxmmc'] }}</view>
+								<view class="disc_item">所属期始：{{ item['skssqq'] }}</view>
+								<view class="disc_item">所属期止：{{ item['skssqz'] }}</view>
 							</view>
 						</view>
+						<view class="no_data" v-if="!etaxList.length">暂无数据</view>
 					</block>
-					<block v-if="tabIndex == 2">
-						<view v-for="(item, index) in list" class="content-item">
-							<view class="disc">
-								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-								<view class="disc_item">名称：{{ item['名称'] }}</view>
-								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
-							</view>
-						</view>
-					</block>
-					<block v-if="tabIndex == 3">
-						<view v-for="(item, index) in list" class="content-item">
-							<view class="disc">
-								<view class="disc_item">发明（设计）人：{{ item['发明（设计）人'] }}</view>
-								<view class="disc_item">名称：{{ item['名称'] }}</view>
-								<view class="disc_item">公开（公告）日：{{ item['公开（公告）日'] }}</view>
-							</view>
-						</view>
-					</block>
-				</scroll-view> -->
+				</scroll-view>
 			</view>
 		</x-popup>
 	</view>
@@ -75,6 +53,7 @@
 
 <script>
 import { channelLogicApi } from '@/services/channelLogicApi.js';
+import { formatDate } from '@/utils/index.js';
 
 export default {
 	data() {
@@ -87,13 +66,14 @@ export default {
 			componyName: '',
 			tabs: [
 				{
-					title: '荣誉'
+					title: '工商异常信息'
 				},
 				{
-					title: '发明专利'
+					title: '税务异常信息'
 				}
 			],
-			totalList: {}
+			etaxList: {},
+			businessList: {}
 		};
 	},
 	methods: {
@@ -103,21 +83,29 @@ export default {
 			});
 		},
 		handleIkown() {
-			this.isKown = false;
+			this.isKown = !this.isKown;
 		},
 		onBlur({ detail: { value } }) {
 			this.componyName = value;
 		},
-		showPicture() {
-			this.isKown = true;
-		},
 		async handleSearch() {
-			console.log('handleSearch');
+			const { componyName } = this;
+			this.popup = true;
 			try {
-				// const resp = await channelLogicApi.PolicyList({ city: this.myArea, title: this.title, page: 1, pageSize: 10 });
-				// this.list = resp.result;
+				const resp = await channelLogicApi.Business({ componyName });
+				this.businessList = JSON.parse(resp).data.abnormalList.map(v => {
+					if (v.remove_date) {
+						v.remove_date = formatDate(v.remove_date);
+					}
+					if (v.abnormal_date) {
+						v.abnormal_date = formatDate(v.abnormal_date);
+					}
+					return v;
+				});
+
+				this.getEtax(componyName);
 			} catch (e) {
-				//TODO handle the exception
+				console.log(e);
 			} finally {
 			}
 		},
@@ -129,22 +117,10 @@ export default {
 		},
 		handleTab(index) {
 			this.tabIndex = index;
-			switch (index) {
-				case 0:
-					this.list = this.totalList['rongyu'];
-					break;
-				case 1:
-					this.list = this.totalList['fmzl'];
-					break;
-				case 2:
-					this.list = this.totalList['wgzl'];
-					break;
-				case 3:
-					this.list = this.totalList['syxx'];
-					break;
-				default:
-					break;
-			}
+		},
+		async getEtax(componyName) {
+			const resp = await channelLogicApi.Etax({ componyName });
+			this.etaxList = JSON.parse(resp).data.taxML.body.taxML.sbqkList.sbqk;
 		}
 	}
 };
@@ -156,9 +132,15 @@ export default {
 .page {
 	width: 100%;
 	height: 100vh;
-	min-height: 1000upx;
+	min-height: 1334upx;
 	overflow: hidden;
-
+	.no_data {
+		margin: 30upx;
+		text-align: center;
+		font-size: 22upx;
+		font-weight: 400;
+		color: #000;
+	}
 	.bg {
 		width: 100%;
 		height: 100%;
@@ -278,6 +260,7 @@ export default {
 		@include absolute-center-top(470upx);
 		width: 683upx;
 		background: #ffffff;
+		height: 600upx;
 		box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
 		border-radius: 11upx;
 		overflow: hidden;
@@ -341,7 +324,7 @@ export default {
 			}
 		}
 
-		.content {
+		.contents {
 			width: 683upx;
 			height: 700upx;
 			background: #ffffff;
@@ -354,7 +337,8 @@ export default {
 				// padding: 0 28upx 0 78upx;
 				position: relative;
 				padding-top: 1rpx;
-				height: 175upx;
+				margin-top: 10upx;
+				min-height: 175upx;
 				border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
 
 				.title {
@@ -373,6 +357,7 @@ export default {
 
 					&_item {
 						margin: 0 0 10upx 0;
+						font-size: 19upx;
 					}
 				}
 

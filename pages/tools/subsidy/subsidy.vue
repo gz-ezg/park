@@ -17,10 +17,10 @@
 				<input type="number" maxlength="11" @blur="handleInput" data-name="tel" class="item__iput" placeholder="请输入手机号码" />
 			</view>
 			<view @tap="handleSubmit" class="button">立即提交</view>
-			<image src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
+			<image @tap="handleIkown" src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
 		</view>
 		<view v-if="isKown" class="tip">
-			<image class="img" src="../../../static/qrcode1.png" ></image>
+			<image class="img" src="../../../static/qrcode_bz.png"></image>
 			<text class="text">扫码可以在手机上使用哦</text>
 			<button @tap="handleIkown" class="button">我知道了</button>
 			<view class="trangle"></view>
@@ -103,7 +103,7 @@ export default {
 			this[dataset.name] = value;
 		},
 		handleIkown() {
-			this.isKown = false;
+			this.isKown = !this.isKown;
 		},
 		qrR(e) {
 			this.imgUrl = e;
@@ -138,11 +138,12 @@ export default {
 			// 	}
 			// });
 			// console.log(getUrlQuery('http://localhost:3333/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).)
-			let url = getUrlQuery('http://www.yrl.fun/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).url;
 
 			try {
-				// let resp = await channelLogicApi.GetShortUrl({ url: url });
+				
 				// console.log(resp);
+				let url = getUrlQuery('http://park.zgcfo.com/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).url;
+				let resp = await channelLogicApi.GetShortUrl({ url: url });
 				this.val = url;
 				this.$refs.qrcode._makeCode();
 				this.popup = true;

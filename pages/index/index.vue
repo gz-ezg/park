@@ -185,7 +185,9 @@ page {
 		}
 
 		&-content {
-			@include flex-evenly();
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
 
 			&-item {
 				width: 211upx;
