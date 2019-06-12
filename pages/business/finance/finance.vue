@@ -9,7 +9,7 @@
 			</view>
 			<swiper class="card-swiper" :class="dotStyle ? 'square-dot' : 'round-dot'" :circular="true" :autoplay="true" interval="5000" duration="500" @change="cardSwiper">
 				<swiper-item v-for="(item, index) in imgList" :key="index" :class="cardCur == index ? 'cur' : ''">
-					<view class="swiper-item"><image :src="item.path"></image></view>
+					<view class="swiper-item"><image :src="item"></image></view>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -31,10 +31,13 @@ export default {
 			loading: false
 		};
 	},
-	async onLoad() {
+	async onLoad() {},
+	async onShow() {
 		try {
 			let res = await channelLogicApi.ChannelTypeImgList({ type: 'cs' });
-			this.imgList = res;
+			console.log(res)
+			this.imgList = res.map(v => `http://cloud.zgcfo.com/api/assets/${v.path}`);
+			console.log(this.imgList)
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -79,6 +82,7 @@ page {
 
 	.bg {
 		width: 100%;
+		min-height: 1334upx;
 		height: 100vh;
 	}
 
@@ -127,7 +131,7 @@ page {
 		width: 610upx !important;
 		left: 70upx;
 		box-sizing: border-box;
-		padding: 40upx 0upx 70upx;
+		// padding: 40upx 0upx 70upx;
 		overflow: initial;
 
 		image {

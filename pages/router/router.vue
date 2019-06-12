@@ -15,13 +15,18 @@ export default {
 			autoplay: true,
 			interval: 10000,
 			duration: 1000,
-			imgList:[]
+			imgList: []
 		};
 	},
 	async onLoad() {
 		try {
 			let res = await channelLogicApi.ChannelTypeImgList({ type: 'sy' });
-			this.imgList = res.map(v => `http://cloud.yrl.fun/api/assets/${v.path}`);
+			this.imgList = res.map(v => `http://cloud.zgcfo.com/api/assets/${v.path}`);
+			// this.imgList = [
+			// 	'api/assets/upload/files/logo1.jpg',
+			// 	'http://cloud.zgcfo.com/api/assets/upload/files/logo2.jpg',
+			// 	'http://cloud.zgcfo.com/api/assets/upload/files/logo3.jpg',
+			// ];
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -42,11 +47,13 @@ page {
 }
 .page {
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
+	min-height: 1334upx;
 
 	.swiper {
 		width: 100vw;
 		height: 100vh;
+		min-height: 1334upx;
 		.bg_log {
 			width: 100vw;
 			height: 100vh;

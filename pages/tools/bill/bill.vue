@@ -109,11 +109,11 @@
 						<view class="popup__item-disc">{{ invoice['salerTaxNum'] }}</view>
 					</view>
 					<view class="popup__item">
-						<view class="popup__item-title">地址及电话</view>
+						<view class="popup__item-title">开户行及银行卡号</view>
 						<view class="popup__item-disc">{{ invoice['province'] }} {{ invoice['salerAccount'] }}</view>
 					</view>
 					<view class="popup__item">
-						<view class="popup__item-title">开户行及电话</view>
+						<view class="popup__item-title">地址及电话</view>
 						<view class="popup__item-disc">{{ invoice['salerContact'] }}</view>
 					</view>
 					<view class="popup__footer">本查询结果来源于各地税局系统，查询结果不作为鉴别假票依据</view>
@@ -167,6 +167,7 @@ export default {
 		},
 		hidePopup() {
 			this.popup = false;
+			this.invoice = {}
 		},
 		handleIsKown() {
 			this.isKown = !this.isKown;
@@ -207,11 +208,13 @@ export default {
 			this.loading = true;
 			try {
 				this.invoice = await channelLogicApi.InvoiceCheck(this.form);
+				this.popup = true;
 			} catch (e) {
 				//TODO handle the exception
+				this.$api.toast('服务器异常');
 			} finally {
 				this.loading = false;
-				this.popup = true;
+				
 			}
 		},
 		getDate(type) {

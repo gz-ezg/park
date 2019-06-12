@@ -538,7 +538,7 @@ export default {
 		}
 
 		.chart {
-			height: 307upx;
+			height: 400upx;
 		}
 	}
 	.tip {

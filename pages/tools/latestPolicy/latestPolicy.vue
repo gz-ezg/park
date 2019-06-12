@@ -22,7 +22,11 @@
 			<scroll-view v-if="list.length" class="content" scroll-y="true" @scrolltolower="scrolltolower" scroll-with-animation="true">
 				<view v-for="(item, index) in list" :key="item.id" @tap="showDetail(index)" class="content-item">
 					<view class="title">{{ item.Title }}</view>
-					<view class="disc">{{ item.Province}}<text style="margin: 0 20upx;">{{item.Label}}</text>{{item.Date}}</view>
+					<view class="disc">
+						{{ item.Province }}
+						<text style="margin: 0 20upx;">{{ item.Label }}</text>
+						{{ item.Date }}
+					</view>
 				</view>
 			</scroll-view>
 
@@ -36,6 +40,7 @@
 
 <script>
 import { channelLogicApi } from '@/services/channelLogicApi.js';
+import { formatDate } from '@/utils/index.js';
 let province = [];
 
 export default {
@@ -48,33 +53,61 @@ export default {
 			show: false,
 			list: [],
 			detail: {},
-			value: [18, 0, 0],
+			value: [0, 0],
 			indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth / (750 / 100))}px;`,
-			loading: true,
+			loading: false,
 			myArea: '',
 			page: 0,
 			pageSize: 10,
 			hasMore: true
 		};
 	},
-	async onLoad() {
-		try {
-			const account = uni.getStorageSync('account');
-			this.myArea = JSON.parse(account).cityName;
-			province = await channelLogicApi.GetProvinceList();
-			this.provinceList = province.map(v => v.province.realname);
-			this.city = province[18].city.map(v => v.realname);
-			// console.log(this.provinceList);
-		} catch (e) {
-			//TODO handle the exception
-		} finally {
-			this.loading = false;
+	async onShow() {
+		const account = uni.getStorageSync('account');
+		this.myArea = JSON.parse(account).cityName;
+		let tmpList = uni.getStorageSync('province');
+		if (tmpList) {
+			province = tmpList;
+			this.handleDefaultProvince();
+			return (this.provinceList = tmpList.map(v => v.province.realname));
+		} else {
+			this.getProvince();
 		}
+		this.handleDefaultProvince();
 	},
 	methods: {
 		// onPicLoaded() {
 		// 	this.loading = false
 		// },
+		handleDefaultProvince() {
+			let { myArea } = this;
+			let cIndex;
+			let pIndex = province.findIndex((v1, i1) => {
+				return (
+					v1.city.findIndex((v2, i2) => {
+						if (v2.realname == myArea) {
+							console.log(i2);
+							cIndex = i2;
+							return true;
+						}
+					}) != -1
+				);
+			});
+			this.value = [pIndex, cIndex];
+			this.city = province[pIndex].city.map(v => v.realname);
+		},
+		async getProvince() {
+			this.loading = true;
+			try {
+				province = await channelLogicApi.GetProvinceList();
+				this.provinceList = province.map(v => v.province.realname);
+				uni.setStorageSync('province', province);
+			} catch (e) {
+				//TODO handle the exception
+			} finally {
+				this.loading = false;
+			}
+		},
 		onFocus() {
 			this.isSelect = false;
 		},
@@ -101,7 +134,13 @@ export default {
 				}
 				this.hasMore = resp.total > this.page * this.pageSize ? true : false;
 
-				this.list = [...this.list, ...resp.result];
+				this.list = [
+					...this.list,
+					...resp.result.map(v => {
+						v.Date = formatDate(v.Date,'yyyy-MM-dd');
+						return v;
+					})
+				];
 			} catch (e) {
 				//TODO handle the exception
 			} finally {
@@ -109,12 +148,8 @@ export default {
 			}
 		},
 		handleSelectAddress() {
-			let { isSelect } = this;
-			if (isSelect) {
-				this.isSelect = false;
-			} else {
-				this.isSelect = true;
-			}
+			this.isSelect = !this.isSelect;
+			this.list = [];
 		},
 		async handleSearch() {
 			this.isSelect = false;
@@ -171,6 +206,7 @@ export default {
 	.bg {
 		width: 100%;
 		height: 100%;
+		min-height: 1334upx;
 	}
 
 	.back {
@@ -301,6 +337,7 @@ export default {
 				font-size: 19upx;
 				font-weight: 400;
 				color: rgba(125, 131, 134, 1);
+				@include ellipse-text(1);
 				overflow: hidden;
 
 				&_item {
@@ -332,7 +369,8 @@ export default {
 		padding: 0 33upx 33upx;
 		font-size: 19upx;
 		color: #7d8386;
-		// height: 100upx;
+		overflow: hidden;
+		max-height: 1000upx;
 		// width: 683upx;
 	}
 }

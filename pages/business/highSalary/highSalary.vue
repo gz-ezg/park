@@ -86,6 +86,7 @@ page {
 	.bg {
 		width: 100%;
 		height: 100vh;
+		min-height: 1334upx;
 	}
 
 	.back {

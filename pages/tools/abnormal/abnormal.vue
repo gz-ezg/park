@@ -6,7 +6,7 @@
 			<view @tap="handleIkown" class="search__left"><image src="../../../static/search__left.png" mode=""></image></view>
 			<view class="search__input">
 				<!-- <input placeholder="清收s" /> -->
-				<input @blur="onBlur" type="text" />
+				<input @blur="onBlur" type="text" placeholder="请输入企业名称" />
 			</view>
 			<view @tap="handleSearch" class="search__right"><image src="../../../static/search__input.png" mode=""></image></view>
 		</view>
@@ -17,7 +17,7 @@
 			<button @tap="handleIkown" class="button">我知道了</button>
 			<view class="trangle"></view>
 		</view>
-
+		<x-Loading :show="loading"></x-Loading>
 		<x-popup @hidePopup="hidePopup" bgColor="#fff" @ :title="componyName" :show="popup">
 			<view class="page__body">
 				<view class="tab">
@@ -33,7 +33,7 @@
 								<view class="disc_item">移出日期：{{ item.remove_date }}</view>
 							</view>
 						</view>
-						<view class="no_data" v-if="!businessList.length">暂无数据</view>
+						<view class="no_data" v-if="!businessList.length">{{ loadngTitle }}</view>
 					</block>
 					<block v-if="tabIndex == 1">
 						<view v-for="(item, index) in etaxList" class="contents-item">
@@ -43,7 +43,7 @@
 								<view class="disc_item">所属期止：{{ item['skssqz'] }}</view>
 							</view>
 						</view>
-						<view class="no_data" v-if="!etaxList.length">暂无数据</view>
+						<view class="no_data" v-if="!etaxList.length">{{ loadngTitle }}</view>
 					</block>
 				</scroll-view>
 			</view>
@@ -58,6 +58,8 @@ import { formatDate } from '@/utils/index.js';
 export default {
 	data() {
 		return {
+			loadngTitle: '加载中...',
+			loading: false,
 			isKown: true,
 			list: [],
 			popup: false,
@@ -90,7 +92,12 @@ export default {
 		},
 		async handleSearch() {
 			const { componyName } = this;
-			this.popup = true;
+			if (!componyName) {
+				return this.$api.toast('请输入企业名称');
+			}
+			this.loading = true;
+			this.businessList = [];
+
 			try {
 				const resp = await channelLogicApi.Business({ componyName });
 				this.businessList = JSON.parse(resp).data.abnormalList.map(v => {
@@ -102,11 +109,12 @@ export default {
 					}
 					return v;
 				});
-
-				this.getEtax(componyName);
 			} catch (e) {
 				console.log(e);
 			} finally {
+				this.loadngTitle = '';
+				this.loading = false;
+				this.popup = true;
 			}
 		},
 		showDetail() {
@@ -117,10 +125,23 @@ export default {
 		},
 		handleTab(index) {
 			this.tabIndex = index;
+			if (index == 1) {
+				this.getEtax(this.componyName);
+			}
 		},
 		async getEtax(componyName) {
-			const resp = await channelLogicApi.Etax({ componyName });
-			this.etaxList = JSON.parse(resp).data.taxML.body.taxML.sbqkList.sbqk;
+			this.loading = true;
+			this.loadngTitle = '加载中';
+			this.etaxList = [];
+			try {
+				const resp = await channelLogicApi.Etax({ componyName });
+				this.etaxList = JSON.parse(resp).data.taxML.body.taxML.sbqkList.sbqk;
+			} catch (e) {
+				//TODO handle the exception
+			} finally {
+				this.loadngTitle = ''
+				this.loading = false;
+			}
 		}
 	}
 };
@@ -144,6 +165,7 @@ export default {
 	.bg {
 		width: 100%;
 		height: 100%;
+		min-height: 1334upx;
 	}
 	.tip {
 		@include absolute-center-top(470upx);

@@ -80,6 +80,7 @@ page {
 
 	.bg {
 		width: 100%;
+		min-height: 1334upx;
 		height: 100vh;
 	}
 
