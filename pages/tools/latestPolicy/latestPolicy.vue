@@ -31,13 +31,15 @@
 			</scroll-view>
 
 			<x-popup bgColor="#fff" :show="show" :title="detail.Title" @hidePopup="hidePopup">
-				<view class="popus"><rich-text :nodes="detail.HContent"></rich-text></view>
+				<scroll-view style="padding: 0;" class="popus" scroll-y="true" scroll-with-animation="true">
+					<view class="popus"><rich-text :nodes="detail.HContent"></rich-text></view>	
+				</scroll-view>
 			</x-popup>
 		</view>
 		<x-Loading :show="loading"></x-Loading>
 	</view>
 </template>
-
+d
 <script>
 import { channelLogicApi } from '@/services/channelLogicApi.js';
 import { formatDate } from '@/utils/index.js';
@@ -49,6 +51,7 @@ export default {
 			provinceList: [],
 			city: [],
 			title: '',
+			cityId: '',
 			isSelect: false,
 			show: false,
 			list: [],
@@ -56,20 +59,18 @@ export default {
 			value: [0, 0],
 			indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth / (750 / 100))}px;`,
 			loading: false,
-			myArea: '',
 			page: 0,
 			pageSize: 10,
-			hasMore: true
+			hasMore: true,
+			myArea: ''
 		};
 	},
 	async onShow() {
-		const account = uni.getStorageSync('account');
-		this.myArea = JSON.parse(account).cityName;
+		await this.hanleGetUserCity();
 		let tmpList = uni.getStorageSync('province');
 		if (tmpList) {
 			province = tmpList;
-			this.handleDefaultProvince();
-			return (this.provinceList = tmpList.map(v => v.province.realname));
+			this.provinceList = tmpList.map(v => v.province.realname);
 		} else {
 			this.getProvince();
 		}
@@ -79,14 +80,23 @@ export default {
 		// onPicLoaded() {
 		// 	this.loading = false
 		// },
+		async hanleGetUserCity() {
+			try {
+				const resp = await channelLogicApi.getUserCity();
+				this.cityId = resp.city;
+			} catch (e) {
+				this.$api.toast('获取地址失败');
+			} finally {
+			}
+		},
 		handleDefaultProvince() {
-			let { myArea } = this;
+			let { cityId } = this;
 			let cIndex;
 			let pIndex = province.findIndex((v1, i1) => {
 				return (
 					v1.city.findIndex((v2, i2) => {
-						if (v2.realname == myArea) {
-							console.log(i2);
+						if (v2.id == cityId) {
+							this.myArea = v2.realname;
 							cIndex = i2;
 							return true;
 						}
@@ -137,7 +147,7 @@ export default {
 				this.list = [
 					...this.list,
 					...resp.result.map(v => {
-						v.Date = formatDate(v.Date,'yyyy-MM-dd');
+						v.Date = formatDate(v.Date, 'yyyy-MM-dd');
 						return v;
 					})
 				];
@@ -369,7 +379,7 @@ export default {
 		padding: 0 33upx 33upx;
 		font-size: 19upx;
 		color: #7d8386;
-		overflow: hidden;
+		// overflow: hidden;
 		max-height: 1000upx;
 		// width: 683upx;
 	}

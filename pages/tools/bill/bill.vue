@@ -37,7 +37,7 @@
 					<input @blur="handleInput" maxlength="6" type="number" data-name="termCode" class="item__iput" placeholder="请输入验证码后六位" />
 				</view>
 				<view v-if="type == 'radio2'" class="item">
-					<view class="title">金额</view>
+					<view class="title">金额(不含税)</view>
 					<input @blur="handleInput"  type="number" data-name="termCode" class="item__iput" placeholder="请输入金额" />
 				</view>
 				<view @tap="handleSubmit" class="button">查验</view>
@@ -49,7 +49,6 @@
 				<button @tap="handleIkown" class="button">我知道了</button>
 				<view class="trangle"></view>
 			</view>
-
 			<x-popup @hidePopup="hidePopup" bgColor="#fff" @ :title="title" :show="popup">
 				<scroll-view class="scroll" scroll-y="true" scroll-with-animation="true">
 					<image v-if="invoice['isCancel'] == 'N'" class="popup__pic" src="../../../static/zhengchang.png"></image>
@@ -93,24 +92,24 @@
 					</view>
 					<view class="popup__item">
 						<view class="popup__item-title">地址及电话</view>
-						<view class="popup__item-disc">{{ invoice['buyerContact'] }} {{ invoice['buyerAccount'] }}</view>
+						<view class="popup__item-disc">{{ invoice['buyerContact'] }}</view>
 					</view>
 					<view class="popup__item">
-						<view class="popup__item-title">开户行及电话</view>
-						<view class="popup__item-disc">{{ invoice['checkCode'] }}</view>
+						<view class="popup__item-title">开户行及账号</view>
+						<view class="popup__item-disc">{{ invoice['buyerAccount'] }}</view>
 					</view>
 					<view class="popup__title">销售方</view>
 					<view class="popup__item">
 						<view class="popup__item-title">销售方</view>
-						<view class="popup__item-disc">{{ invoice['buyerAccount'] }}</view>
+						<view class="popup__item-disc">{{ invoice['salerName'] }}</view>
 					</view>
 					<view class="popup__item">
 						<view class="popup__item-title">纳税人识别号</view>
 						<view class="popup__item-disc">{{ invoice['salerTaxNum'] }}</view>
 					</view>
 					<view class="popup__item">
-						<view class="popup__item-title">开户行及银行卡号</view>
-						<view class="popup__item-disc">{{ invoice['province'] }} {{ invoice['salerAccount'] }}</view>
+						<view class="popup__item-title">开户行及账号</view>
+						<view class="popup__item-disc">{{ invoice['salerAccount'] }}</view>
 					</view>
 					<view class="popup__item">
 						<view class="popup__item-title">地址及电话</view>
@@ -119,6 +118,11 @@
 					<view class="popup__footer">本查询结果来源于各地税局系统，查询结果不作为鉴别假票依据</view>
 				</scroll-view>
 			</x-popup>
+			<view class="text-tip">
+				<view>*温馨提示：</view>
+				<view style="margin-top: 4x;">1、每份发票每天最多可查询5次</view>
+				<view style="margin-top: 4x;">2、部分地区税务机关代开发票可能存在滞后情况，敬请谅解</view>
+			</view>
 		</view>
 
 		<x-Loading :show="loading"></x-Loading>
@@ -344,6 +348,7 @@ export default {
 		@include absolute-center-top(900upx);
 		display: flex;
 		align-items: center;
+		z-index: 4;
 		margin: 0 auto;
 		width: 683upx;
 		height: 133upx;
@@ -384,7 +389,12 @@ export default {
 			border-bottom: 20upx rgba(53, 53, 53, 1) solid;
 		}
 	}
-
+	.text-tip {
+		@include absolute-center-top(900upx);
+		color: #ffffff;
+		width: 600upx;
+		font-size: 16upx;
+	}
 	.popup {
 		&__pic {
 			position: absolute;

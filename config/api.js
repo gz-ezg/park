@@ -9,7 +9,10 @@ export const apiRoute = {
 			url: '/channel/garden/getShortUrl',
 			type: 'get',
 		},
-
+		getUserCity: {
+			url: '/channel/garden/getUserCity',
+			type: 'get',
+		},
 		SendMsg: {
 			url: '/channel/garden/sendMsg',
 			type: 'get',
