@@ -81,7 +81,7 @@ export default {
 			popup: false,
 			tabIndex: 0,
 			detailList: [],
-			componyName:'',
+			componyName: '',
 			tabs: [
 				{
 					title: '荣誉'
@@ -250,13 +250,13 @@ export default {
 	&__bodys {
 		width: 683upx;
 		height: 700upx;
-	
+
 		.tab {
 			display: flex;
 			background: #ffffff;
 			border-bottom: 1upx solid rgba(93, 72, 67, 0.1);
 			border-radius: 11upx 11upx 0 0;
-	
+
 			&__item {
 				position: relative;
 				flex: 1;
@@ -267,10 +267,10 @@ export default {
 				font-weight: 600;
 				color: rgba(44, 34, 34, 1);
 			}
-	
+
 			.active {
 				color: #e21616;
-	
+
 				&:after {
 					content: '';
 					position: absolute;
@@ -285,7 +285,7 @@ export default {
 				}
 			}
 		}
-	
+
 		.contents {
 			width: 683upx;
 			height: 700upx;
@@ -293,7 +293,7 @@ export default {
 			box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
 			border-radius: 0 0 11upx 11upx;
 			overflow: hidden;
-	
+
 			&-item {
 				@include flex-center();
 				// padding: 0 28upx 0 78upx;
@@ -301,7 +301,7 @@ export default {
 				padding-top: 1rpx;
 				height: 175upx;
 				border-bottom: 1upx solid rgba(93, 72, 67, 0.16);
-	
+
 				.title {
 					margin: 16upx 0;
 					font-size: 25upx;
@@ -309,18 +309,18 @@ export default {
 					color: rgba(44, 34, 34, 1);
 					line-height: 40upx;
 				}
-	
+
 				.discs {
 					font-size: 19upx;
 					font-weight: 400;
 					color: rgba(125, 131, 134, 1);
 					width: 606upx;
-	
+
 					&_items {
 						margin: 0 0 10upx 0;
 					}
 				}
-	
+
 				.button {
 					position: absolute;
 					right: 28upx;
@@ -335,7 +335,7 @@ export default {
 					background: linear-gradient(90deg, rgba(242, 63, 15, 1) 0%, rgba(246, 30, 21, 1) 100%);
 					box-shadow: 0upx -1upx 0upx 0upx rgba(93, 72, 67, 0.16);
 				}
-	
+
 				.button_gray {
 					background: linear-gradient(90deg, rgba(217, 221, 224, 1) 0%, rgba(198, 204, 207, 1) 100%);
 				}

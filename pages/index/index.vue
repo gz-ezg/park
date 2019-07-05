@@ -51,7 +51,7 @@
 				<view class="index__text">
 					<view class="line"></view>
 					<view class="year">2019</view>
-					<view class="copyright">Copyright @2004 - 2019 xxxx.com 版权所有</view>
+					<view class="copyright">Copyright @2004 - 2019 park.zgcfo.com 版权所有</view>
 				</view>
 			</view>
 		</view>
@@ -116,7 +116,7 @@ page {
 .index {
 	width: 100%;
 	height: 100%;
-
+	
 	&__bg {
 		&-top {
 			width: 100vw;

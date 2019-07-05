@@ -19,6 +19,7 @@
 					<view @click="handleQuit" class="item" v-for="(item, index) in city" :key="index">{{ item }}</view>
 				</picker-view-column>
 			</picker-view>
+
 			<scroll-view v-if="list.length" class="content" scroll-y="true" @scrolltolower="scrolltolower" scroll-with-animation="true">
 				<view v-for="(item, index) in list" :key="item.id" @tap="showDetail(index)" class="content-item">
 					<view class="title">{{ item.Title }}</view>
@@ -32,7 +33,7 @@
 
 			<x-popup bgColor="#fff" :show="show" :title="detail.Title" @hidePopup="hidePopup">
 				<scroll-view style="padding: 0;" class="popus" scroll-y="true" scroll-with-animation="true">
-					<view class="popus"><rich-text :nodes="detail.HContent"></rich-text></view>	
+					<view class="popus"><rich-text :nodes="detail.HContent"></rich-text></view>
 				</scroll-view>
 			</x-popup>
 		</view>
@@ -77,9 +78,6 @@ export default {
 		this.handleDefaultProvince();
 	},
 	methods: {
-		// onPicLoaded() {
-		// 	this.loading = false
-		// },
 		async hanleGetUserCity() {
 			try {
 				const resp = await channelLogicApi.getUserCity();
@@ -171,6 +169,8 @@ export default {
 			if (this.loading) {
 				return;
 			}
+			this.hasMore = true;
+			this.list = [];
 			this.getList();
 		},
 		bindChange({ detail: { value } }) {

@@ -38,7 +38,7 @@
 				</view>
 				<view v-if="type == 'radio2'" class="item">
 					<view class="title">金额(不含税)</view>
-					<input @blur="handleInput"  type="number" data-name="termCode" class="item__iput" placeholder="请输入金额" />
+					<input @blur="handleInput" type="number" data-name="termCode" class="item__iput" placeholder="请输入金额" />
 				</view>
 				<view @tap="handleSubmit" class="button">查验</view>
 				<image @tap="handleIsKown" src="../../../static/icon_blue-sm.png" class="icon__bottom" mode=""></image>
@@ -171,7 +171,7 @@ export default {
 		},
 		hidePopup() {
 			this.popup = false;
-			this.invoice = {}
+			this.invoice = {};
 		},
 		handleIsKown() {
 			this.isKown = !this.isKown;
@@ -218,7 +218,6 @@ export default {
 				this.$api.toast('服务器异常');
 			} finally {
 				this.loading = false;
-				
 			}
 		},
 		getDate(type) {
@@ -307,7 +306,7 @@ export default {
 				width: 180upx;
 			}
 			.mr-4 {
-				margin-right: 40upx;
+				margin-right: 20upx;
 			}
 			.radio {
 				image {
@@ -316,7 +315,7 @@ export default {
 					vertical-align: middle;
 					width: 34upx;
 					height: 34upx;
-					margin-right: 10upx;
+					margin-right: 8upx;
 				}
 			}
 			.item__iput {

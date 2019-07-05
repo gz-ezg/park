@@ -1,0 +1,1 @@
+<template name="33528074"><view class="_view {{ h[ 0 ].rcl }}"><view hidden="{{ h[ 1 ].vs }}" class="_view x-mask"></view><view hidden="{{ h[ 2 ].vs }}" class="_view container"><view class="_view loader"><view class="_view roataqx-loader"><view class="_view one"></view><view class="_view two"></view><view class="_view three"></view></view></view></view></view></template>

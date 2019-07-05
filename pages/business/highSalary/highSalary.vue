@@ -5,7 +5,7 @@
 			<view class="back" @tap="navBack">返回</view>
 
 			<scroll-view class="content" scroll-y="true" scroll-with-animation="true">
-				<view v-for="(item, index) in list" id="demo1" class="content-item">
+				<view :key="index" v-for="(item, index) in list" id="demo1" class="content-item">
 					<view class="number">
 						{{ index + 1 }}
 						<view class="fix"></view>
@@ -19,7 +19,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<x-Loading :show="loading"></x-Loading>
+		<x-Loading @close="loading = false" :show="loading"></x-Loading>
 	</view>
 </template>
 
@@ -33,19 +33,33 @@ export default {
 	data() {
 		return {
 			list: [],
-			loading: true
+			loading: false
 		};
 	},
 	async onLoad() {
+		let listDate;
 		try {
-			console.log();
-			const resp = await channelLogicApi.TopFiveCompny();
-			this.list = resp.map(v => {
-				v.register_time = formatDate(v.register_time, 'yyyy年MM月dd日');
-				return v;
-			});
+			listDate = uni.getStorageSync('highSalary');
+			if (!listDate || new Date().valueOf() - listDate.time > 60000) {
+				this.loading = true;
+				const resp = await channelLogicApi.TopFiveCompny();
+				this.list = resp.map(v => {
+					v.register_time = formatDate(v.register_time, 'yyyy年MM月dd日');
+					return v;
+				});
+				listDate = {
+					list: this.list,
+					time: new Date().valueOf()
+				};
+				uni.setStorage({
+					key: 'highSalary',
+					data: listDate
+				});
+			} else {
+				this.list = listDate.list;
+			}
 		} catch (e) {
-			//TODO handle the exception
+			this.loading = false;
 		} finally {
 			this.loading = false;
 		}
@@ -86,7 +100,6 @@ page {
 	.bg {
 		width: 100%;
 		height: 100vh;
-		min-height: 1334upx;
 	}
 
 	.back {

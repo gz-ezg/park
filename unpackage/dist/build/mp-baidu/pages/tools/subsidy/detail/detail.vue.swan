@@ -1,0 +1,1 @@
+<template name="a84ecd04"><view class="_view body {{ h[ 0 ].rcl }}"><rich-text class="_rich-text" nodes="{{ h[ 1 ][ 'nodes' ] }}"></rich-text><view class="_view fixed" data-cid="{{ _c || c }}" data-hid="{{ 2 }}" bindtap="_pe">返回首页</view></view></template>

@@ -7,6 +7,10 @@ import {
 } from '@/services/channelLogicApi.js'
 import xLoading from './components/x-loading/x-loading.vue'
 import xPopup from './components/x-popup/x-popup.vue';
+
+
+
+
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 Vue.prototype.$api = api

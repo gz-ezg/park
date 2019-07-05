@@ -1,0 +1,1 @@
+<template name="13a8d344"><view class="_view _qrCode {{ h[ 0 ].rcl }}"><canvas class="_canvas _qrCodeCanvas" style="{{ h[ 1 ].st }}" id="_myQrCodeCanvas" canvas-id="_myQrCodeCanvas"></canvas><image hidden="{{ h[ 2 ].vs }}" class="_image" style="{{ h[ 2 ].st }}" src="{{ h[ 2 ][ 'src' ] }}"></image></view></template>

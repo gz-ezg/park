@@ -5,17 +5,7 @@
 			<input data-i="loginCode" @focus="handleFocus" @blur="handleBlur" class="input" type="text" value="" placeholder-class="white_placeholder" placeholder="请输入登录码" />
 		</view>
 		<view :class="{ select: select2 }" class="login_input-p">
-			<input
-				adjust-position="false"
-				data-i="password"
-				@focus="handleFocus"
-				@blur="handleBlur"
-				class="input"
-				type="text"
-				value=""
-				placeholder-class="white_placeholder"
-				placeholder="请输入密码"
-			/>
+			<input data-i="password" @focus="handleFocus" @blur="handleBlur" class="input" type="text" value="" placeholder-class="white_placeholder" placeholder="请输入密码" />
 		</view>
 		<view @tap="handleLogin" class="login_button"><image class="login_button-icon" src="../../static/icon_arrow.png"></image></view>
 	</view>
@@ -73,7 +63,7 @@ export default {
 					loginCode: this.loginCode,
 					password: this.password
 				});
-				uni.setStorageSync('account',JSON.stringify(resp));
+				uni.setStorageSync('account', JSON.stringify(resp));
 				this.$api.navigateTo({ url: route.router });
 			} catch (e) {
 				return this.$api.toast('密码不正确');
@@ -99,9 +89,11 @@ page {
 }
 
 .login {
-	height: 100%;
+	height: 100vh;
+	min-height: 1334upx;
 	width: 100%;
-
+	background: url('/static/welcome-bg.png');
+	background-size: 100% 100%;
 	&_welcome {
 		margin: 0 auto;
 		display: block;

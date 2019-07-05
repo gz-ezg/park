@@ -17,7 +17,7 @@
 				<input disabled data-name="tel" class="item__iput" placeholder="5000" />
 			</view>
 			<view v-if="tabIndex == 0" class="item">
-				<view class="title">无险一金</view>
+				<view class="title">五险一金</view>
 				<input @blur="handleInput" data-name="insurance" class="item__iput" type="number" placeholder="请输入您每月实缴五险一金" />
 			</view>
 			<view v-if="tabIndex == 1" class="item">
@@ -122,7 +122,7 @@
 					<text>{{ result.taxAfter }}</text>
 				</view>
 
-				<view class="chart"><canvas canvas-id="canvasRing" id="canvasRing" class="charts"></canvas></view>
+				<view id="main" class="chart"></view>
 			</view>
 		</x-popup>
 	</view>
@@ -133,9 +133,13 @@ import xPopup from '@/components/x-popup/x-popup.vue';
 import uCharts from '@/libs/u-charts.js';
 import { channelLogicApi } from '@/services/channelLogicApi.js';
 import route from '@/config/route.js';
-var _self;
-var canvaColumn = null;
-var canvaRing;
+
+var head = document.getElementsByTagName('head')[0];
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = 'https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.simple.js';
+head.appendChild(script);
+
 export default {
 	components: {
 		xPopup
@@ -167,17 +171,8 @@ export default {
 			}
 		};
 	},
-	onLoad() {
-		_self = this;
-		this.cWidth = uni.upx2px(690);
-		this.cHeight = uni.upx2px(300);
-		this.getServerData();
-	},
+	onLoad() {},
 	methods: {
-		hidePopup() {
-			console.log('ee');
-			this.show = false;
-		},
 		navBack() {
 			if (this.next) {
 				(this.form = {
@@ -271,6 +266,7 @@ export default {
 				return this.$api.toast('请输入当前月收入');
 			}
 			this.next = true;
+			this.isKown = false;
 		},
 		handlePopus(e) {
 			console.log(e);
@@ -289,37 +285,38 @@ export default {
 			}
 		},
 		getServerData(data) {
+			console.log(data)
 			this.popup = true;
-			_self.showRing('canvasRing', data);
-		},
-		showRing(canvasId, data = { taxbefore: '', taxAfter: '', taxTotal: '' }) {
-			canvaRing = new uCharts({
-				$this: _self,
-				canvasId: canvasId,
-				type: 'pie',
-				fontSize: 11,
-				legend: true,
-				background: '#FFFFFF',
-				pixelRatio: _self.pixelRatio,
+			let option = {
+				tooltip: {
+					show: true,
+					trigger: 'item',
+					triggerOn: 'click',
+					formatter: '{a} <br/>{b} : {c} ({d}%)'
+				},
 				series: [
 					{
-						name: '应付工资',
-						data: data.taxbefore || 0
-					},
-					{
-						name: '应缴个税',
-						data: data.taxAfter || 0
-					},
-					{
-						name: '税后工资',
-						data: data.taxTotal || 0
+						name: '收入占比',
+						type: 'pie',
+						radius: '60%',
+						center: ['50%', '50%'],
+						data: [
+							{ value: data.taxAfter, name: '税后工资' },
+							{ value: data.taxbefore, name: '应付工资' },
+							{ value: data.taxTotal, name: '应缴个税' },
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
 					}
-				],
-				animation: true,
-				dataLabel: false,
-				width: _self.cWidth * _self.pixelRatio,
-				height: _self.cHeight * _self.pixelRatio
-			});
+				]
+			};
+			var myChart = window.echarts.init(document.getElementById('main'));
+			myChart.setOption(option);
 		}
 	}
 };
@@ -330,7 +327,7 @@ export default {
 
 .page {
 	width: 100%;
-	height: 100vh;
+	height: 1334upx;
 	min-height: 1334upx;
 	overflow: hidden;
 
@@ -538,7 +535,8 @@ export default {
 		}
 
 		.chart {
-			height: 400upx;
+			width: 683upx;
+			height: 500upx;
 		}
 	}
 	.tip {

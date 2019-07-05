@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view v-show="show" class="x-mask"></view>
-		<view class="container" v-show="show">
+		<view @click="handleClose" class="container" v-show="show">
 			<view class="loader">
 				<view class="roataqx-loader">
 					<view class="one"></view>
@@ -33,7 +33,11 @@ export default {
 	data() {
 		return {};
 	},
-	methods: {}
+	methods: {
+		handleClose() {
+			this.$emit('close')
+		}
+	}
 };
 </script>
 

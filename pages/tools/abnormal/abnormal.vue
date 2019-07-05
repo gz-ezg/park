@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<image class="bg" src="../../../static/abnormal_bg.png" mode=""></image>
+		<image :class="{ blur: loading }"  class="bg" src="../../../static/abnormal_bg.png" mode=""></image>
 		<view class="back" @tap="navBack">返回</view>
 		<view class="search">
 			<view @tap="handleIkown" class="search__left"><image src="../../../static/search__left.png" mode=""></image></view>
@@ -17,7 +17,7 @@
 			<button @tap="handleIkown" class="button">我知道了</button>
 			<view class="trangle"></view>
 		</view>
-		<x-Loading :show="loading"></x-Loading>
+		<x-Loading @close="loading = false" :show="loading"></x-Loading>
 		<x-popup @hidePopup="hidePopup" bgColor="#fff" @ :title="componyName" :show="popup">
 			<view class="page__body">
 				<view class="tab">
@@ -131,7 +131,7 @@ export default {
 		},
 		async getEtax(componyName) {
 			this.loading = true;
-			this.loadngTitle = '加载中';
+			this.loadngTitle = '';
 			this.etaxList = [];
 			try {
 				const resp = await channelLogicApi.Etax({ componyName });
@@ -139,7 +139,7 @@ export default {
 			} catch (e) {
 				//TODO handle the exception
 			} finally {
-				this.loadngTitle = ''
+				this.loadngTitle = '';
 				this.loading = false;
 			}
 		}

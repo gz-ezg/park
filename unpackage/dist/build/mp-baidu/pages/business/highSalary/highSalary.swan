@@ -1,0 +1,2 @@
+<import src="./highSalary.vue.swan" />
+    <template is="0e06b58e" data="{{{ ...$root['0'], $root }}}"/>

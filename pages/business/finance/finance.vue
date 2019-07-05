@@ -8,9 +8,7 @@
 				<image class="icon" src="../../../static/finance_icon.png" />
 			</view>
 			<swiper class="card-swiper" :class="dotStyle ? 'square-dot' : 'round-dot'" :circular="true" :autoplay="true" interval="5000" duration="500" @change="cardSwiper">
-				<swiper-item v-for="(item, index) in imgList" :key="index" :class="cardCur == index ? 'cur' : ''">
-					<view class="swiper-item"><image :src="item"></image></view>
-				</swiper-item>
+				<swiper-item v-for="(item, index) in imgList" :key="index" :class="cardCur == index ? 'cur' : ''"><image class="swiper-item" :src="item"></image></swiper-item>
 			</swiper>
 		</view>
 		<x-Loading :show="loading"></x-Loading>
@@ -35,9 +33,9 @@ export default {
 	async onShow() {
 		try {
 			let res = await channelLogicApi.ChannelTypeImgList({ type: 'cs' });
-			console.log(res)
+			console.log(res);
 			this.imgList = res.map(v => `http://cloud.zgcfo.com/api/assets/${v.path}`);
-			console.log(this.imgList)
+			console.log(this.imgList);
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -79,11 +77,12 @@ page {
 	position: relative;
 	width: 100%;
 	height: 100vh;
+	min-height: 1334upx;
 
 	.bg {
 		width: 100%;
-		min-height: 1334upx;
 		height: 100vh;
+		min-height: 1334upx;
 	}
 
 	.back {

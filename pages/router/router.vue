@@ -1,7 +1,7 @@
 <template>
-	<view class="page">
-		<swiper @tap="navToIndex" class="swiper" :autoplay="autoplay" circular="true" :interval="interval" :duration="duration">
-			<swiper-item v-for="(item, index) in imgList"><image class="bg_log" :src="item" mode=""></image></swiper-item>
+	<view @click="navToIndex" class="page">
+		<swiper  class="swiper" :autoplay="autoplay" circular="true" :interval="interval" :duration="duration">
+			<swiper-item :key="index" v-for="(item, index) in imgList"><image class="bg_log" :src="item" mode=""></image></swiper-item>
 		</swiper>
 	</view>
 </template>
@@ -22,11 +22,6 @@ export default {
 		try {
 			let res = await channelLogicApi.ChannelTypeImgList({ type: 'sy' });
 			this.imgList = res.map(v => `http://cloud.zgcfo.com/api/assets/${v.path}`);
-			// this.imgList = [
-			// 	'api/assets/upload/files/logo1.jpg',
-			// 	'http://cloud.zgcfo.com/api/assets/upload/files/logo2.jpg',
-			// 	'http://cloud.zgcfo.com/api/assets/upload/files/logo3.jpg',
-			// ];
 		} catch (e) {
 			//TODO handle the exception
 		}
@@ -47,16 +42,14 @@ page {
 }
 .page {
 	width: 100vw;
-	height: 100%;
-	min-height: 1334upx;
+	height: 100vh;
 
 	.swiper {
 		width: 100vw;
 		height: 100vh;
-		min-height: 1334upx;
 		.bg_log {
 			width: 100vw;
-			height: 100vh;
+			height: 100%;
 		}
 	}
 }

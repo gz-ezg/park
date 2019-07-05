@@ -35,7 +35,7 @@
 				</view>
 				<view class="popus__bottom">
 					<view class="popus__bottom-pic">
-						<image :src="imgUrl"></image>
+						<div id="yjcode" class="qrcode"></div>
 						<tki-qrcode
 							ref="qrcode"
 							:val="val"
@@ -67,8 +67,10 @@ import xPopup from '@/components/x-popup/x-popup.vue';
 import xLoading from '@/components/x-loading/x-loading.vue';
 import route from '@/config/route.js';
 import { getUrlQuery } from '@/utils/index.js';
-
 import tkiQrcode from '@/components/tki-qrcode/tki-qrcode.vue';
+//
+require('@/libs/qrcode.js')
+// console.log(url)
 
 export default {
 	data() {
@@ -89,7 +91,7 @@ export default {
 			loadMake: true, // 组件加载完成后自动生成二维码
 			src: '', // 二维码生成后的图片地址或base64
 			showLoading: true,
-			loadingText: 'jiazaizhong'
+			loadingText: ''
 		};
 	},
 	components: {
@@ -107,10 +109,10 @@ export default {
 		},
 		qrR(e) {
 			this.imgUrl = e;
-			console.log(e);
 		},
 		hidePopup() {
 			this.popup = false;
+			document.getElementById('yjcode').innerHTML = "";
 		},
 		navBack() {
 			uni.navigateTo({
@@ -140,12 +142,14 @@ export default {
 			// console.log(getUrlQuery('http://localhost:3333/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).)
 
 			try {
-				
 				// console.log(resp);
 				let url = getUrlQuery('http://park.zgcfo.com/#/pages/tools/subsidy/detail/detail', { companyname, tel, name }).url;
-				let resp = await channelLogicApi.GetShortUrl({ url: url });
-				this.val = url;
-				this.$refs.qrcode._makeCode();
+				// let resp = await channelLogicApi.GetShortUrl({ url: url });
+				new QRCode(document.getElementById('yjcode'), { text: url ,width:'200',height:'200'});
+
+				//
+				// 				this.val = url;
+				// 				this.$refs.qrcode._makeCode();
 				this.popup = true;
 			} catch (e) {
 				//TODO handle the exception
@@ -167,7 +171,7 @@ export default {
 
 	.bg {
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 		min-height: 1334upx;
 	}
 
@@ -200,6 +204,7 @@ export default {
 		&__bottom {
 			@include absolute-center-top(300upx);
 			&-pic {
+				font-size: 22upx;
 				width: 220upx;
 				height: 220upx;
 				margin: 0 auto;
@@ -345,6 +350,10 @@ export default {
 			border-right: 20upx transparent dashed;
 			border-bottom: 20upx rgba(53, 53, 53, 1) solid;
 		}
+	}
+	#yjcode {
+		height: 220upx;
+		width: 220upx;
 	}
 }
 </style>

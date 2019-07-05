@@ -1,0 +1,2 @@
+<import src="./finance.vue.swan" />
+    <template is="6205756f" data="{{{ ...$root['0'], $root }}}"/>

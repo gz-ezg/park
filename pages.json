@@ -48,7 +48,11 @@
 		{
 			"path": "pages/error/error"
 		}
-	],
+	    ,{
+            "path" : "pages/test/test",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
